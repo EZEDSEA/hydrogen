@@ -218,6 +218,12 @@ export {
   getCollectionViewAttributes,
 } from "./collection";
 export type { CollectionViewCollection, CollectionViewOptions } from "./collection";
+export {
+  COLLECTION_UPDATES_TAG_NAME,
+  defineCollectionUpdates,
+  getCollectionUpdatesAttributes,
+} from "./collection";
+export type { CollectionUpdatesElement, CollectionUpdatesOptions } from "./collection";
 
 export {
   canAddToCart,

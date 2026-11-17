@@ -103,7 +103,13 @@ export function CollectionProvider({
   return createElement(CollectionContext.Provider, { value: store }, children);
 }
 
-function useRequiredStore(hookName: string): CollectionStore {
+/**
+ * Returns the store of the nearest `CollectionProvider`. Throws outside a provider, with the name
+ * of the caller in the message.
+ *
+ * @internal
+ */
+export function useRequiredStore(hookName: string): CollectionStore {
   const store = useContext(CollectionContext);
   if (!store) {
     throw new Error(`${hookName} must be used inside a <CollectionProvider>.`);

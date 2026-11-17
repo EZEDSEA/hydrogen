@@ -1,8 +1,10 @@
 import type { ProductCollectionSortKeys } from "../../graphql/generated/storefront-api-types";
+import { getLogger } from "../logging";
 import { createObservable } from "../observable";
 import type { CollectionState, ProductFilter } from "./state";
 import { createInitialCollectionState } from "./state";
 import {
+  browseStateEqual,
   collectionParamsMatchState,
   filterEquals,
   getFilterRemovalUrl,
@@ -11,6 +13,8 @@ import {
   parseSortByValue,
   serializeCollectionParams,
 } from "./url";
+
+const log = getLogger("collection");
 
 /** The collection handle and the search string that your loader fetched products for. */
 export type CollectionData = {
@@ -122,6 +126,14 @@ export type CollectionStore = {
   setOnBrowseChange(callback: (() => void) | null): void;
 
   /**
+   * Adds a listener for filter and sort changes from store methods, such as for analytics. Returns a function that removes the listener.
+   *
+   * Unlike the single `setOnBrowseChange` callback, the store keeps any number of listeners and passes the new state to each. A listener runs only when the filters, sort key, or sort direction change, and before the browse change callback. Syncing from URL params and settling the store don't call it. An error in a listener is logged and doesn't stop the other listeners or the browse change callback.
+   * @param listener - Callback that receives the new state.
+   */
+  subscribeBrowseChange(listener: (state: CollectionState) => void): () => void;
+
+  /**
    * Toggles the filter in a filter value's `input` JSON string from the Storefront API.
    * The method does nothing when the string isn't valid JSON.
    */
@@ -166,6 +178,7 @@ type CollectionStoreContext = {
   observable: ReturnType<typeof createObservable<CollectionState>>;
   handle: string;
   onBrowseChange: (() => void) | null;
+  browseListeners: Set<(state: CollectionState) => void>;
 };
 
 /**
@@ -194,6 +207,7 @@ export function createCollectionStore(options: CreateCollectionStoreOptions): Co
     observable: createObservable<CollectionState>(initialState),
     handle: options.data.handle,
     onBrowseChange: options.onBrowseChange ?? null,
+    browseListeners: new Set(),
   };
 
   return {
@@ -213,6 +227,12 @@ export function createCollectionStore(options: CreateCollectionStoreOptions): Co
     handleFormSubmit: (event) => handleFormSubmit(context, event),
     setOnBrowseChange: (callback) => {
       context.onBrowseChange = callback;
+    },
+    subscribeBrowseChange: (listener) => {
+      context.browseListeners.add(listener);
+      return () => {
+        context.browseListeners.delete(listener);
+      };
     },
     toggleFilterInput: (input) => toggleFilterInput(context, input),
     setSortByValue: (sortByValue) => setSortByValue(context, sortByValue),
@@ -255,14 +275,25 @@ function applyBrowseChange(
   change: BrowseChange,
   notify = true,
 ): void {
-  context.observable.setState((prev) => {
-    const merged = { ...prev, ...change, status: "loading" as const };
+  const prev = context.observable.state;
+  context.observable.setState((state) => {
+    const merged = { ...state, ...change, status: "loading" as const };
     merged.reverse = normalizeReverse(merged.sortKey, merged.reverse);
     return merged;
   });
-  if (notify) {
-    context.onBrowseChange?.();
+  if (!notify) return;
+  const next = context.observable.state;
+  if (!browseStateEqual(prev, next)) {
+    for (const listener of context.browseListeners) {
+      // A failing listener, such as analytics, must not stop the navigation.
+      try {
+        listener(next);
+      } catch (error) {
+        log.error("collection browse change listener failed", { error });
+      }
+    }
   }
+  context.onBrowseChange?.();
 }
 
 function toggleFilter(context: CollectionStoreContext, filter: ProductFilter): void {

@@ -1,6 +1,8 @@
 // @vitest-environment happy-dom
 import { describe, it, expect, vi } from "vitest";
 
+import { configureLogging } from "../../logging";
+import { createTestLogger } from "../../test-utils";
 import { createCollectionStore, type CollectionData, type CollectionStore } from "../collection";
 
 function testData(handle = "shoes", dataSearch = ""): CollectionData {
@@ -619,5 +621,82 @@ describe("setSortByValue", () => {
 
     expect(store.getState().sortKey).toBe("TITLE");
     expect(store.getState().reverse).toBe(false);
+  });
+});
+
+describe("subscribeBrowseChange", () => {
+  it("calls the listener with the new state after each customer change", () => {
+    store = createTestStore();
+    const listener = vi.fn();
+    store.subscribeBrowseChange(listener);
+
+    store.toggleFilter({ tag: "sale" });
+    store.setSortKey("PRICE", true);
+    store.handleFormSubmit(submitForm({ "filter.p.vendor": "Nike" }));
+    store.reset();
+
+    expect(listener).toHaveBeenCalledTimes(4);
+    expect(listener.mock.calls[1]?.[0]).toMatchObject({
+      filters: [{ tag: "sale" }],
+      sortKey: "PRICE",
+      reverse: true,
+      status: "loading",
+    });
+  });
+
+  it("skips changes that leave the filters and sort the same, URL syncs, and settling", () => {
+    store = createTestStore({ urlSearch: "filter.p.tag=men&sort_by=price-descending" });
+    const listener = vi.fn();
+    store.subscribeBrowseChange(listener);
+
+    store.setFilters([{ tag: "men" }]);
+    store.setSortByValue("price-descending");
+    store.toggleFilterInput("not json");
+    store.syncFromParams(new URLSearchParams("filter.p.tag=women"));
+    store.settle();
+
+    expect(listener).not.toHaveBeenCalled();
+
+    // The comparison uses the synced state.
+    store.setFilters([{ tag: "men" }]);
+    expect(listener).toHaveBeenCalledTimes(1);
+  });
+
+  it("logs a listener error and still calls the other listeners and the browse change callback", () => {
+    const logger = createTestLogger();
+    configureLogging({ logger });
+    store = createTestStore();
+    const error = new Error("listener failed");
+    const listener = vi.fn();
+    const onBrowseChange = vi.fn();
+    store.subscribeBrowseChange(() => {
+      throw error;
+    });
+    store.subscribeBrowseChange(listener);
+    store.setOnBrowseChange(onBrowseChange);
+
+    try {
+      store.setSortKey("PRICE");
+    } finally {
+      configureLogging({});
+    }
+
+    expect(listener).toHaveBeenCalledTimes(1);
+    expect(onBrowseChange).toHaveBeenCalledTimes(1);
+    expect(logger.error).toHaveBeenCalledWith("collection browse change listener failed", {
+      scope: "collection",
+      error,
+    });
+  });
+
+  it("stops calling the listener after unsubscribe", () => {
+    store = createTestStore();
+    const listener = vi.fn();
+    const unsubscribe = store.subscribeBrowseChange(listener);
+
+    unsubscribe();
+    store.setSortKey("TITLE");
+
+    expect(listener).not.toHaveBeenCalled();
   });
 });

@@ -22,6 +22,8 @@ export type {
   PredictiveSearchQueryInputPropsOptions,
 } from "./predictive-search";
 export { createProductComponents, useProductForm } from "./product";
+export { CollectionUpdates } from "./collection-updates";
+export type { CollectionUpdatesProps } from "./collection-updates";
 export { CollectionView } from "./collection-view";
 export type { CollectionViewProps } from "./collection-view";
 export { ProductView } from "./product-view";

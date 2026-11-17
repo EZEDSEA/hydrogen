@@ -38,3 +38,10 @@ export {
   getCollectionViewAttributes,
 } from "./collection-view";
 export type { CollectionViewCollection, CollectionViewOptions } from "./collection-view";
+
+export {
+  COLLECTION_UPDATES_TAG_NAME,
+  defineCollectionUpdates,
+  getCollectionUpdatesAttributes,
+} from "./collection-updates";
+export type { CollectionUpdatesElement, CollectionUpdatesOptions } from "./collection-updates";

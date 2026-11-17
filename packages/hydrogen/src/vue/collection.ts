@@ -111,12 +111,15 @@ export const CollectionProvider = defineComponent({
       },
     );
 
+    // Watch the values, not the `data` object. A parent that renders a new `data` object with the
+    // same values sets it before `urlSearch`, and the sync watcher would reconcile the new URL's
+    // store against the old URL in between, and settle it.
     watch(
-      () => [readUrlSearch(), props.data] as const,
+      [readUrlSearch, () => props.data.handle, () => props.data.dataSearch],
       () => {
         reconciler.reconcile(readUrlSearch(), props.data.dataSearch);
       },
-      { flush: "sync", immediate: true, deep: true },
+      { flush: "sync", immediate: true },
     );
 
     onUnmounted(() => {
@@ -127,7 +130,14 @@ export const CollectionProvider = defineComponent({
   },
 });
 
-function useRequiredStoreRef(composableName: string): ShallowRef<CollectionStore> {
+/**
+ * Returns a shallow ref of the nearest collection provider's store. The ref follows the new store
+ * when the provider replaces the store. Throws outside a provider, with the name of the caller in
+ * the message.
+ *
+ * @internal
+ */
+export function useRequiredStoreRef(composableName: string): ShallowRef<CollectionStore> {
   const storeRef = inject(CollectionStoreKey, null);
   if (!storeRef) {
     throw new Error(`${composableName} must be used inside a <CollectionProvider>.`);

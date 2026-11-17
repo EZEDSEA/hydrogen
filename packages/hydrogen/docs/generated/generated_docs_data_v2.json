@@ -5932,6 +5932,651 @@
       "members": []
     }
   },
+  "AvailableFilter": {
+    "src/core/collection/state.ts": {
+      "filePath": "src/core/collection/state.ts",
+      "name": "AvailableFilter",
+      "description": "A filter that the Storefront API returns for the current collection or search results. Render filter controls, such as checkboxes, swatches, and sliders, from the filter's values.",
+      "isPublicDocs": true,
+      "members": [
+        {
+          "filePath": "src/core/collection/state.ts",
+          "syntaxKind": "PropertySignature",
+          "name": "id",
+          "value": "string",
+          "description": "ID of the filter."
+        },
+        {
+          "filePath": "src/core/collection/state.ts",
+          "syntaxKind": "PropertySignature",
+          "name": "label",
+          "value": "string",
+          "description": "Name to display, such as \"Color\", \"Size\", or \"Price\"."
+        },
+        {
+          "filePath": "src/core/collection/state.ts",
+          "syntaxKind": "PropertySignature",
+          "name": "presentation",
+          "value": "FilterPresentation | null",
+          "description": "How the storefront displays the filter's values. The Storefront API returns a value only for `LIST` filters and `null` for other filters.",
+          "isOptional": true
+        },
+        {
+          "filePath": "src/core/collection/state.ts",
+          "syntaxKind": "PropertySignature",
+          "name": "type",
+          "value": "FilterType",
+          "description": "Kind of input, such as a boolean toggle, a multi-select list, or a price range."
+        },
+        {
+          "filePath": "src/core/collection/state.ts",
+          "syntaxKind": "PropertySignature",
+          "name": "values",
+          "value": "AvailableFilterValue<TValue>[]",
+          "description": "Values that a customer can select, each with a label, a product count, and a filter input."
+        }
+      ],
+      "value": "export interface AvailableFilter<\n  TValue extends BaseAvailableFilterValue = BaseAvailableFilterValue,\n> {\n  /** ID of the filter. */\n  id: string;\n  /** Name to display, such as \"Color\", \"Size\", or \"Price\". */\n  label: string;\n  /** Kind of input, such as a boolean toggle, a multi-select list, or a price range. */\n  type: FilterType;\n  /**\n   * How the storefront displays the filter's values. The Storefront API\n   * returns a value only for `LIST` filters and `null` for other filters.\n   */\n  presentation?: FilterPresentation | null;\n  /** Values that a customer can select, each with a label, a product count, and a filter input. */\n  values: AvailableFilterValue<TValue>[];\n}"
+    }
+  },
+  "FilterPresentation": {
+    "src/core/collection/state.ts": {
+      "filePath": "src/core/collection/state.ts",
+      "syntaxKind": "TypeAliasDeclaration",
+      "name": "FilterPresentation",
+      "value": "\"IMAGE\" | \"SWATCH\" | \"TEXT\"",
+      "description": "How the storefront displays a filter's values."
+    }
+  },
+  "FilterType": {
+    "src/core/collection/state.ts": {
+      "filePath": "src/core/collection/state.ts",
+      "syntaxKind": "TypeAliasDeclaration",
+      "name": "FilterType",
+      "value": "\"BOOLEAN\" | \"LIST\" | \"PRICE_RANGE\" | (string & {})",
+      "description": "The kind of input a filter takes, such as a boolean toggle, a multi-select list, or a price range."
+    }
+  },
+  "AvailableFilterValue": {
+    "src/core/collection/state.ts": {
+      "filePath": "src/core/collection/state.ts",
+      "syntaxKind": "TypeAliasDeclaration",
+      "name": "AvailableFilterValue",
+      "value": "BaseAvailableFilterValue & PickIfPresent<TValue, \"swatch\">",
+      "description": "A value that a customer can select within an available filter.\n\nPass your Storefront API query's value type as `TValue` to include the `swatch` field when your query selects it."
+    }
+  },
+  "BaseAvailableFilterValue": {
+    "src/core/collection/state.ts": {
+      "filePath": "src/core/collection/state.ts",
+      "name": "BaseAvailableFilterValue",
+      "description": "The ID, label, product count, and filter input that every filter value has.",
+      "members": [
+        {
+          "filePath": "src/core/collection/state.ts",
+          "syntaxKind": "PropertySignature",
+          "name": "count",
+          "value": "number",
+          "description": "Number of products in the current results that match the value."
+        },
+        {
+          "filePath": "src/core/collection/state.ts",
+          "syntaxKind": "PropertySignature",
+          "name": "id",
+          "value": "string",
+          "description": "ID of the filter value."
+        },
+        {
+          "filePath": "src/core/collection/state.ts",
+          "syntaxKind": "PropertySignature",
+          "name": "input",
+          "value": "string",
+          "description": "Filter input as a JSON string. Pass the string to `toggleFilterInput()` or `isFilterInputActive`."
+        },
+        {
+          "filePath": "src/core/collection/state.ts",
+          "syntaxKind": "PropertySignature",
+          "name": "label",
+          "value": "string",
+          "description": "Label to display, such as \"Red\" or \"Nike\"."
+        }
+      ],
+      "value": "interface BaseAvailableFilterValue {\n  /** ID of the filter value. */\n  id: string;\n  /** Label to display, such as \"Red\" or \"Nike\". */\n  label: string;\n  /** Number of products in the current results that match the value. */\n  count: number;\n  /** Filter input as a JSON string. Pass the string to `toggleFilterInput()` or `isFilterInputActive`. */\n  input: string;\n}"
+    }
+  },
+  "PickIfPresent": {
+    "src/core/collection/state.ts": {
+      "filePath": "src/core/collection/state.ts",
+      "syntaxKind": "TypeAliasDeclaration",
+      "name": "PickIfPresent",
+      "value": "TKey extends keyof TValue\n  ? Pick<TValue, TKey>\n  : {}",
+      "description": "Copies a field from your query's value type when your query selects the field. Otherwise, the type adds no fields."
+    }
+  },
+  "CreateInitialCollectionStateGeneratedType": {
+    "src/core/collection/state.ts": {
+      "filePath": "src/core/collection/state.ts",
+      "name": "CreateInitialCollectionStateGeneratedType",
+      "description": "Creates collection state with no filters and the default sort for a collection handle.",
+      "isPublicDocs": true,
+      "params": [
+        {
+          "name": "handle",
+          "description": "Collection handle, such as `shoes`.",
+          "value": "string",
+          "filePath": "src/core/collection/state.ts"
+        }
+      ],
+      "returns": {
+        "filePath": "src/core/collection/state.ts",
+        "description": "A state with no filters, the collection's default sort, an ascending direction, and an idle status.",
+        "name": "CollectionState",
+        "value": "CollectionState"
+      },
+      "value": "export function createInitialCollectionState(handle: string): CollectionState {\n  return {\n    handle,\n    filters: [],\n    sortKey: undefined,\n    reverse: false,\n    status: \"idle\",\n  };\n}"
+    }
+  },
+  "CollectionState": {
+    "src/core/collection/state.ts": {
+      "filePath": "src/core/collection/state.ts",
+      "name": "CollectionState",
+      "description": "The customer's filter and sort choices and the loading status.\n\nProducts, product counts, available filters, and the collection ID come from your loader data.",
+      "members": [
+        {
+          "filePath": "src/core/collection/state.ts",
+          "syntaxKind": "PropertySignature",
+          "name": "filters",
+          "value": "ProductFilter[]",
+          "description": "Active product filters, matching the `filter.*` URL params."
+        },
+        {
+          "filePath": "src/core/collection/state.ts",
+          "syntaxKind": "PropertySignature",
+          "name": "handle",
+          "value": "string",
+          "description": "Collection handle, such as `shoes`."
+        },
+        {
+          "filePath": "src/core/collection/state.ts",
+          "syntaxKind": "PropertySignature",
+          "name": "reverse",
+          "value": "boolean",
+          "description": "`true` for a descending sort. The URL's sort value then ends in `-descending`."
+        },
+        {
+          "filePath": "src/core/collection/state.ts",
+          "syntaxKind": "PropertySignature",
+          "name": "sortKey",
+          "value": "ProductCollectionSortKeys | undefined",
+          "description": "Storefront API sort key, or `undefined` for the collection's default sort."
+        },
+        {
+          "filePath": "src/core/collection/state.ts",
+          "syntaxKind": "PropertySignature",
+          "name": "status",
+          "value": "'idle' | 'loading'",
+          "description": "Reads `loading` from a filter or sort change until the store settles, and `idle` when the results match the filters and sort. Show a loading state while the value is `loading`."
+        }
+      ],
+      "value": "export interface CollectionState {\n  /** Collection handle, such as `shoes`. */\n  handle: string;\n\n  /** Active product filters, matching the `filter.*` URL params. */\n  filters: ProductFilter[];\n  /** Storefront API sort key, or `undefined` for the collection's default sort. */\n  sortKey: ProductCollectionSortKeys | undefined;\n  /** `true` for a descending sort. The URL's sort value then ends in `-descending`. */\n  reverse: boolean;\n  /** Reads `loading` from a filter or sort change until the store settles, and `idle` when the results match the filters and sort. Show a loading state while the value is `loading`. */\n  status: \"idle\" | \"loading\";\n}"
+    }
+  },
+  "ParseCollectionParamsGeneratedType": {
+    "src/core/collection/url.ts": {
+      "filePath": "src/core/collection/url.ts",
+      "name": "ParseCollectionParamsGeneratedType",
+      "description": "Reads collection filters and sort from URL search params. Pass the result to your Storefront API collection query.\n\nThe function reads Liquid-compatible `filter.p.*` and `filter.v.*` keys and the `sort_by` param.\n\nA URL that sets availability to both in stock and out of stock produces no availability filter. A price bound must be a non-negative number as `<input type=\"number\">` submits it, such as `12.5`; the function ignores any other value, such as `12,50`, the same way on the server and in the browser. The function recognizes the best-selling and manual sort values, plus created, price, and title with an ascending or descending suffix. For other sort values, the sort key is `undefined`. The `parseSortByValue` function also recognizes relevance, collection default, and ID.",
+      "isPublicDocs": true,
+      "params": [
+        {
+          "name": "searchParams",
+          "description": "URL search params to read.",
+          "value": "URLSearchParams",
+          "filePath": "src/core/collection/url.ts"
+        }
+      ],
+      "returns": {
+        "filePath": "src/core/collection/url.ts",
+        "description": "The filters, sort key, and sort direction from the URL.",
+        "name": "CollectionParams",
+        "value": "CollectionParams"
+      },
+      "value": "export function parseCollectionParams(searchParams: URLSearchParams): CollectionParams {\n  const filters = parseProductFilters(searchParams);\n  const sortKey = parseCollectionSortKey(searchParams);\n  const rawSortBy = searchParams.get(\"sort_by\");\n  const reverse = rawSortBy?.endsWith(SORT_BY_DESCENDING_SUFFIX) ?? false;\n\n  return { filters, sortKey, reverse };\n}"
+    }
+  },
+  "CollectionParams": {
+    "src/core/collection/url.ts": {
+      "filePath": "src/core/collection/url.ts",
+      "name": "CollectionParams",
+      "description": "The filters, sort key, and sort direction in a collection URL.",
+      "members": [
+        {
+          "filePath": "src/core/collection/url.ts",
+          "syntaxKind": "PropertySignature",
+          "name": "filters",
+          "value": "ProductFilter[]",
+          "description": "Active product filters from the `filter.*` URL params.\n\nThe filters use the Storefront Standard Events filter type. When your query variables use generated Storefront API types, cast the filters to the generated filter type where you pass them as variables."
+        },
+        {
+          "filePath": "src/core/collection/url.ts",
+          "syntaxKind": "PropertySignature",
+          "name": "reverse",
+          "value": "boolean",
+          "description": "`true` when the `sort_by` value ends with `-descending`."
+        },
+        {
+          "filePath": "src/core/collection/url.ts",
+          "syntaxKind": "PropertySignature",
+          "name": "sortKey",
+          "value": "ProductCollectionSortKeys | undefined",
+          "description": "Storefront API sort key from the `sort_by` param, or `undefined` when the param is missing or unrecognized."
+        }
+      ],
+      "value": "export interface CollectionParams {\n  /**\n   * Active product filters from the `filter.*` URL params.\n   *\n   * The filters use the Storefront Standard Events filter type. When your query variables use generated Storefront API types, cast the filters to the generated filter type where you pass them as variables.\n   */\n  filters: ProductFilter[];\n  /** Storefront API sort key from the `sort_by` param, or `undefined` when the param is missing or unrecognized. */\n  sortKey: ProductCollectionSortKeys | undefined;\n  /** `true` when the `sort_by` value ends with `-descending`. */\n  reverse: boolean;\n}"
+    }
+  },
+  "SerializeCollectionParamsGeneratedType": {
+    "src/core/collection/url.ts": {
+      "filePath": "src/core/collection/url.ts",
+      "name": "SerializeCollectionParamsGeneratedType",
+      "description": "Converts collection filters and sort to URL search params with Liquid-compatible keys. Use the result to build collection URLs.\n\nThe result holds only the `filter.*` and `sort_by` keys. The function leaves out `sort_by` for the collection's default sort.\n\nCategory filters convert to `filter.p.category`, which `parseCollectionParams` doesn't read. A price filter with a minimum and a maximum produces two params. To build a filter checkbox, parse a filter value's `input` string and convert the parsed filter. The resulting entries give the checkbox name and value.",
+      "isPublicDocs": true,
+      "params": [
+        {
+          "name": "state",
+          "description": "The filters, sort key, and sort direction to convert.",
+          "value": "Pick<CollectionState, \"filters\" | \"sortKey\" | \"reverse\">",
+          "filePath": "src/core/collection/url.ts"
+        }
+      ],
+      "returns": {
+        "filePath": "src/core/collection/url.ts",
+        "description": "URL search params that hold the filters and sort.",
+        "name": "URLSearchParams",
+        "value": "URLSearchParams"
+      },
+      "value": "export function serializeCollectionParams(\n  state: Pick<CollectionState, \"filters\" | \"sortKey\" | \"reverse\">,\n): URLSearchParams {\n  const params = new URLSearchParams();\n\n  for (const filter of state.filters) {\n    serializeFilter(params, filter);\n  }\n\n  if (state.sortKey) {\n    params.set(\"sort_by\", getSortByValue(state.sortKey, state.reverse));\n  }\n\n  return params;\n}"
+    }
+  },
+  "NormalizeCollectionSearchGeneratedType": {
+    "src/core/collection/url.ts": {
+      "filePath": "src/core/collection/url.ts",
+      "name": "NormalizeCollectionSearchGeneratedType",
+      "description": "Removes a leading `?` from a search string. Normalize search strings before you compare them.",
+      "isPublicDocs": true,
+      "params": [
+        {
+          "name": "search",
+          "description": "The search string from your router, with or without a leading `?`.",
+          "value": "string",
+          "filePath": "src/core/collection/url.ts"
+        }
+      ],
+      "returns": {
+        "filePath": "src/core/collection/url.ts",
+        "description": "The search string without a leading `?`.",
+        "name": "string",
+        "value": "string"
+      },
+      "value": "export function normalizeCollectionSearch(search: string): string {\n  return search.startsWith(\"?\") ? search.slice(1) : search;\n}"
+    }
+  },
+  "GetFilterRemovalUrlGeneratedType": {
+    "src/core/collection/url.ts": {
+      "filePath": "src/core/collection/url.ts",
+      "name": "GetFilterRemovalUrlGeneratedType",
+      "description": "Builds a query string from the current URL params, minus the given filter. Use the string in plain remove-filter links.\n\nThe function keeps every other param and drops the `before` and `after` pagination cursors, which sends the customer to the first page of results.",
+      "isPublicDocs": true,
+      "params": [
+        {
+          "name": "currentParams",
+          "description": "The current URL search params.",
+          "value": "URLSearchParams",
+          "filePath": "src/core/collection/url.ts"
+        },
+        {
+          "name": "filter",
+          "description": "The filter to remove from the URL.",
+          "value": "ProductFilter",
+          "filePath": "src/core/collection/url.ts"
+        }
+      ],
+      "returns": {
+        "filePath": "src/core/collection/url.ts",
+        "description": "A query string that starts with `?`. The string is `?` alone when no params remain.",
+        "name": "string",
+        "value": "string"
+      },
+      "value": "export function getFilterRemovalUrl(currentParams: URLSearchParams, filter: ProductFilter): string {\n  const result = new URLSearchParams(currentParams);\n  removeFilterParams(result, filter);\n  clearPaginationCursors(result);\n  const serialized = result.toString();\n  return serialized ? `?${serialized}` : \"?\";\n}"
+    }
+  },
+  "GetSortByValueGeneratedType": {
+    "src/core/collection/url.ts": {
+      "filePath": "src/core/collection/url.ts",
+      "name": "GetSortByValueGeneratedType",
+      "description": "Converts a Storefront API sort key and direction to a Liquid-compatible `sort_by` value, such as `price-ascending` or `best-selling`.\n\nOnly the price, title, created, and ID sort keys get a direction suffix. Other sort keys, such as best selling, ignore the direction.",
+      "isPublicDocs": true,
+      "params": [
+        {
+          "name": "sortKey",
+          "description": "Storefront API product collection sort key.",
+          "value": "ProductCollectionSortKeys",
+          "filePath": "src/core/collection/url.ts"
+        },
+        {
+          "name": "reverse",
+          "description": "`true` for descending, `false` for ascending.",
+          "value": "boolean",
+          "filePath": "src/core/collection/url.ts"
+        }
+      ],
+      "returns": {
+        "filePath": "src/core/collection/url.ts",
+        "description": "The value for the `sort_by` URL param.",
+        "name": "string",
+        "value": "string"
+      },
+      "value": "export function getSortByValue(sortKey: ProductCollectionSortKeys, reverse: boolean): string {\n  const base = SORT_KEY_TO_SORT_BY[sortKey] ?? sortKey.toLowerCase();\n\n  if (!isDirectionalSortKey(sortKey)) return base;\n\n  return reverse ? `${base}-descending` : `${base}-ascending`;\n}"
+    }
+  },
+  "ParseSortByValueGeneratedType": {
+    "src/core/collection/url.ts": {
+      "filePath": "src/core/collection/url.ts",
+      "name": "ParseSortByValueGeneratedType",
+      "description": "Converts a Liquid-compatible `sort_by` value to a Storefront API sort key and direction. The `getSortByValue` function does the opposite conversion.\n\nFor unrecognized values, the sort key is `undefined`.",
+      "isPublicDocs": true,
+      "params": [
+        {
+          "name": "value",
+          "description": "A `sort_by` value, such as `price-ascending` or `best-selling`.",
+          "value": "string",
+          "filePath": "src/core/collection/url.ts"
+        }
+      ],
+      "returns": {
+        "filePath": "src/core/collection/url.ts",
+        "description": "The sort key and `reverse`, which reads `true` for descending values.",
+        "name": "{\n  sortKey: ProductCollectionSortKeys | undefined;\n  reverse: boolean;\n}",
+        "value": "{\n  sortKey: ProductCollectionSortKeys | undefined;\n  reverse: boolean;\n}"
+      },
+      "value": "export function parseSortByValue(value: string): {\n  sortKey: ProductCollectionSortKeys | undefined;\n  reverse: boolean;\n} {\n  if (value.endsWith(SORT_BY_DESCENDING_SUFFIX)) {\n    const base = value.slice(0, -SORT_BY_DESCENDING_SUFFIX.length);\n    return { sortKey: SORT_BY_TO_SORT_KEY[base], reverse: true };\n  }\n\n  if (value.endsWith(SORT_BY_ASCENDING_SUFFIX)) {\n    const base = value.slice(0, -SORT_BY_ASCENDING_SUFFIX.length);\n    return { sortKey: SORT_BY_TO_SORT_KEY[base], reverse: false };\n  }\n\n  return { sortKey: SORT_BY_TO_SORT_KEY[value], reverse: false };\n}"
+    }
+  },
+  "FilterEqualsGeneratedType": {
+    "src/core/collection/url.ts": {
+      "filePath": "src/core/collection/url.ts",
+      "name": "FilterEqualsGeneratedType",
+      "description": "Checks whether two product filters match.\n\nPrice filters match when the minimum and maximum are equal, including ranges that set only one bound.",
+      "isPublicDocs": true,
+      "params": [
+        {
+          "name": "a",
+          "description": "The first filter to compare.",
+          "value": "ProductFilter",
+          "filePath": "src/core/collection/url.ts"
+        },
+        {
+          "name": "b",
+          "description": "The second filter to compare.",
+          "value": "ProductFilter",
+          "filePath": "src/core/collection/url.ts"
+        }
+      ],
+      "returns": {
+        "filePath": "src/core/collection/url.ts",
+        "description": "`true` when both filters are the same kind with the same values. `false` for different kinds or unrecognized filters.",
+        "name": "boolean",
+        "value": "boolean"
+      },
+      "value": "export function filterEquals(a: ProductFilter, b: ProductFilter): boolean {\n  const kindA = filterKind(a);\n  const kindB = filterKind(b);\n  if (kindA !== kindB || kindA == null) return false;\n\n  switch (kindA) {\n    case \"tag\":\n      return a.tag === b.tag;\n    case \"available\":\n      return a.available === b.available;\n    case \"price\":\n      return priceRangeEquals(a.price, b.price);\n    case \"productType\":\n      return a.productType === b.productType;\n    case \"productVendor\":\n      return a.productVendor === b.productVendor;\n    case \"variantOption\": {\n      const aOpt = a.variantOption;\n      const bOpt = b.variantOption;\n      if (aOpt == null || bOpt == null) return false;\n      return aOpt.name === bOpt.name && (aOpt.value ?? \"\") === (bOpt.value ?? \"\");\n    }\n    case \"productMetafield\": {\n      const aMeta = a.productMetafield;\n      const bMeta = b.productMetafield;\n      if (aMeta == null || bMeta == null) return false;\n      return metafieldEquals(aMeta, bMeta);\n    }\n    case \"variantMetafield\": {\n      const aMeta = a.variantMetafield;\n      const bMeta = b.variantMetafield;\n      if (aMeta == null || bMeta == null) return false;\n      return metafieldEquals(aMeta, bMeta);\n    }\n    case \"taxonomyMetafield\": {\n      const aMeta = a.taxonomyMetafield;\n      const bMeta = b.taxonomyMetafield;\n      if (aMeta == null || bMeta == null) return false;\n      return aMeta.key === bMeta.key && aMeta.value === bMeta.value;\n    }\n    case \"category\": {\n      const aCat = a.category;\n      const bCat = b.category;\n      if (aCat == null || bCat == null) return false;\n      return aCat.id === bCat.id;\n    }\n  }\n}"
+    }
+  },
+  "IsFilterInputActiveGeneratedType": {
+    "src/core/collection/url.ts": {
+      "filePath": "src/core/collection/url.ts",
+      "name": "IsFilterInputActiveGeneratedType",
+      "description": "Checks whether a filter value's `input` JSON string from the Storefront API matches an active filter. Use the result to set the checked state of a filter control.\n\nThe function compares filters the same way as `filterEquals`.",
+      "isPublicDocs": true,
+      "params": [
+        {
+          "name": "activeFilters",
+          "description": "The active filters, such as `filters` from the collection state.",
+          "value": "ProductFilter[]",
+          "filePath": "src/core/collection/url.ts"
+        },
+        {
+          "name": "input",
+          "description": "The filter value's `input` JSON string.",
+          "value": "string",
+          "filePath": "src/core/collection/url.ts"
+        }
+      ],
+      "returns": {
+        "filePath": "src/core/collection/url.ts",
+        "description": "`true` when the parsed input matches an active filter. `false` when the input matches no active filter or isn't valid JSON.",
+        "name": "boolean",
+        "value": "boolean"
+      },
+      "value": "export function isFilterInputActive(activeFilters: ProductFilter[], input: string): boolean {\n  let parsed: ProductFilter;\n  try {\n    parsed = JSON.parse(input) as ProductFilter;\n  } catch {\n    return false;\n  }\n  return activeFilters.some((filter) => filterEquals(filter, parsed));\n}"
+    }
+  },
+  "CreateCollectionStoreGeneratedType": {
+    "src/core/collection/collection.ts": {
+      "filePath": "src/core/collection/collection.ts",
+      "name": "CreateCollectionStoreGeneratedType",
+      "description": "Creates a store that holds the customer's filter and sort choices for one collection. Your loader fetches the products.\n\nThe store reads its starting filters and sort from `urlSearch`, or from `dataSearch` when you omit `urlSearch`. In React, use `CollectionProvider`, which creates the store for you and keeps the store in sync with the URL.",
+      "isPublicDocs": true,
+      "params": [
+        {
+          "name": "options",
+          "description": "The collection data, the current URL search string, and the browse change callback.",
+          "value": "CreateCollectionStoreOptions",
+          "filePath": "src/core/collection/collection.ts"
+        }
+      ],
+      "returns": {
+        "filePath": "src/core/collection/collection.ts",
+        "description": "A store with methods that change the filters and sort and report the loading status.",
+        "name": "CollectionStore",
+        "value": "CollectionStore"
+      },
+      "value": "export function createCollectionStore(options: CreateCollectionStoreOptions): CollectionStore {\n  const initialState = buildInitialState(options);\n\n  const context: CollectionStoreContext = {\n    observable: createObservable<CollectionState>(initialState),\n    handle: options.data.handle,\n    onBrowseChange: options.onBrowseChange ?? null,\n    browseListeners: new Set(),\n  };\n\n  return {\n    getState: () => context.observable.state,\n    subscribe: (listener) => context.observable.subscribe(listener),\n    setFilters: (filters) => applyBrowseChange(context, { filters: normalizeFilters(filters) }),\n    toggleFilter: (filter) => toggleFilter(context, filter),\n    setSortKey: (sortKey, reverse) =>\n      applyBrowseChange(context, { sortKey, reverse: reverse ?? false }),\n    reset: () => resetStore(context),\n    matchesParams: (searchParams) => matchesParams(context, searchParams),\n    syncFromParams: (searchParams) => syncFromParams(context, searchParams),\n    settle: () => settleStore(context),\n    serializeToParams: () => serializeCollectionParams(context.observable.state),\n    getFilterRemovalUrl: (filter) =>\n      getFilterRemovalUrl(serializeCollectionParams(context.observable.state), filter),\n    handleFormSubmit: (event) => handleFormSubmit(context, event),\n    setOnBrowseChange: (callback) => {\n      context.onBrowseChange = callback;\n    },\n    subscribeBrowseChange: (listener) => {\n      context.browseListeners.add(listener);\n      return () => {\n        context.browseListeners.delete(listener);\n      };\n    },\n    toggleFilterInput: (input) => toggleFilterInput(context, input),\n    setSortByValue: (sortByValue) => setSortByValue(context, sortByValue),\n  };\n}",
+      "examples": [
+        {
+          "title": "Example",
+          "description": "",
+          "tabs": [
+            {
+              "code": "const store = createCollectionStore({\n  data: loaderData.collection,\n  urlSearch: window.location.search,\n  onBrowseChange: () => navigate({ search: store.serializeToParams().toString() }),\n});\n\nstore.subscribe((state) => renderFilters(state.filters));",
+              "title": "Example"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "CreateCollectionStoreOptions": {
+    "src/core/collection/collection.ts": {
+      "filePath": "src/core/collection/collection.ts",
+      "syntaxKind": "TypeAliasDeclaration",
+      "name": "CreateCollectionStoreOptions",
+      "value": "{\n  /** The collection handle and the search string that your loader fetched products for. */\n  data: CollectionData;\n  /**\n   * Current URL search string from your router, with or without a leading `?`.\n   * Defaults to the `dataSearch` string from `data`.\n   */\n  urlSearch?: string;\n  /**\n   * Runs after each filter or sort change from a store method. Navigate to the new URL in the callback.\n   * Syncing from URL params and settling the store don't run the callback.\n   */\n  onBrowseChange?: () => void;\n}",
+      "description": "Options for `createCollectionStore`.",
+      "members": [
+        {
+          "filePath": "src/core/collection/collection.ts",
+          "syntaxKind": "PropertySignature",
+          "name": "data",
+          "value": "CollectionData",
+          "description": "The collection handle and the search string that your loader fetched products for."
+        },
+        {
+          "filePath": "src/core/collection/collection.ts",
+          "syntaxKind": "PropertySignature",
+          "name": "onBrowseChange",
+          "value": "() => void",
+          "description": "Runs after each filter or sort change from a store method. Navigate to the new URL in the callback. Syncing from URL params and settling the store don't run the callback.",
+          "isOptional": true
+        },
+        {
+          "filePath": "src/core/collection/collection.ts",
+          "syntaxKind": "PropertySignature",
+          "name": "urlSearch",
+          "value": "string",
+          "description": "Current URL search string from your router, with or without a leading `?`. Defaults to the `dataSearch` string from `data`.",
+          "isOptional": true
+        }
+      ]
+    }
+  },
+  "CollectionData": {
+    "src/core/collection/collection.ts": {
+      "filePath": "src/core/collection/collection.ts",
+      "syntaxKind": "TypeAliasDeclaration",
+      "name": "CollectionData",
+      "value": "{\n  /**\n   * Collection handle, such as `shoes`.\n   *\n   * On search pages, pass a handle such as `search:${term}` to keep separate filter and sort state for each search term. When the handle changes, the collection provider reads the filters and sort from the URL again.\n   */\n  handle: string;\n  /**\n   * Search string that your loader used for the Storefront API query, with or without a leading `?`.\n   *\n   * Pass the exact string. The status stays `loading` until this string and the URL search hold the same filters, sort key, and sort direction.\n   */\n  dataSearch: string;\n}",
+      "description": "The collection handle and the search string that your loader fetched products for.",
+      "members": [
+        {
+          "filePath": "src/core/collection/collection.ts",
+          "syntaxKind": "PropertySignature",
+          "name": "dataSearch",
+          "value": "string",
+          "description": "Search string that your loader used for the Storefront API query, with or without a leading `?`.\n\nPass the exact string. The status stays `loading` until this string and the URL search hold the same filters, sort key, and sort direction."
+        },
+        {
+          "filePath": "src/core/collection/collection.ts",
+          "syntaxKind": "PropertySignature",
+          "name": "handle",
+          "value": "string",
+          "description": "Collection handle, such as `shoes`.\n\nOn search pages, pass a handle such as `search:${term}` to keep separate filter and sort state for each search term. When the handle changes, the collection provider reads the filters and sort from the URL again."
+        }
+      ]
+    }
+  },
+  "CollectionStore": {
+    "src/core/collection/collection.ts": {
+      "filePath": "src/core/collection/collection.ts",
+      "syntaxKind": "TypeAliasDeclaration",
+      "name": "CollectionStore",
+      "value": "{\n  /** Returns the current filter and sort state. */\n  getState(): CollectionState;\n\n  /**\n   * Calls the listener on every state change. Returns a function that unsubscribes the listener.\n   * @param listener - Callback that receives the new state.\n   */\n  subscribe(listener: (state: CollectionState) => void): () => void;\n\n  /**\n   * Replaces the active filters and sets the status to `loading`.\n   */\n  setFilters(filters: ProductFilter[]): void;\n\n  /**\n   * Adds the filter when it's inactive and removes the filter when it's active, then sets the status to `loading`.\n   */\n  toggleFilter(filter: ProductFilter): void;\n\n  /**\n   * Changes the sort key and direction, then sets the status to `loading`.\n   * Omit `reverse` to sort in ascending order.\n   */\n  setSortKey(sortKey: ProductCollectionSortKeys, reverse?: boolean): void;\n\n  /**\n   * Clears all filters, restores the collection's default sort, and sets the status to `loading`.\n   */\n  reset(): void;\n\n  /**\n   * Returns `true` when the URL search params hold the same filters and sort as the store.\n   */\n  matchesParams(searchParams: URLSearchParams): boolean;\n\n  /**\n   * Updates the store from URL search params that differ from the current state.\n   * Call the method when the URL changes outside the store, such as on back or forward navigation. The method sets the status to `loading` and skips the browse change callback.\n   */\n  syncFromParams(searchParams: URLSearchParams): void;\n\n  /**\n   * Sets the status to `idle`. Call the method when your loader returns the new products.\n   */\n  settle(): void;\n\n  /**\n   * Returns the filters and sort as URL search params.\n   * The result holds only the `filter.*` and `sort_by` keys.\n   */\n  serializeToParams(): URLSearchParams;\n\n  /**\n   * Returns a query string with the store's filters and sort, minus the given filter.\n   * Use the query string in remove-filter links and buttons.\n   *\n   * The string starts with `?` and leaves out URL params that the store doesn't manage.\n   */\n  getFilterRemovalUrl(filter: ProductFilter): string;\n\n  /**\n   * Applies a submitted filter form to the store.\n   * The form's filter fields replace the active filters. The sort changes only when the form includes a `sort_by` field.\n   *\n   * Call `event.preventDefault()` first, or the browser submits the form and leaves the page. The method throws a `TypeError` when the event target isn't a form element.\n   */\n  handleFormSubmit(event: SubmitEvent): void;\n\n  /**\n   * Sets the callback that runs after each filter or sort change. Navigate to the new URL in the callback.\n   * Pass `null` to remove the callback.\n   */\n  setOnBrowseChange(callback: (() => void) | null): void;\n\n  /**\n   * Adds a listener for filter and sort changes from store methods, such as for analytics. Returns a function that removes the listener.\n   *\n   * Unlike the single `setOnBrowseChange` callback, the store keeps any number of listeners and passes the new state to each. A listener runs only when the filters, sort key, or sort direction change, and before the browse change callback. Syncing from URL params and settling the store don't call it. An error in a listener is logged and doesn't stop the other listeners or the browse change callback.\n   * @param listener - Callback that receives the new state.\n   */\n  subscribeBrowseChange(listener: (state: CollectionState) => void): () => void;\n\n  /**\n   * Toggles the filter in a filter value's `input` JSON string from the Storefront API.\n   * The method does nothing when the string isn't valid JSON.\n   */\n  toggleFilterInput(input: string): void;\n\n  /**\n   * Applies the sort key and direction from a Liquid-compatible `sort_by` value, such as `price-ascending`.\n   * An unrecognized value sets the sort key to `COLLECTION_DEFAULT`.\n   */\n  setSortByValue(sortByValue: string): void;\n}",
+      "description": "Holds the customer's filter and sort choices for a collection or search page, and reports when new results are loading.\n\nEach change updates the state right away and sets the status to `loading`. Your app then navigates, your loader fetches the new products, and you call `settle()` when the data arrives. The collection provider navigates and settles the store for you.\n\nThe store keeps the sort direction only for the price, title, created, and ID sort keys. For other sort keys, `reverse` reads `false`. The store keeps at most one availability filter. Adding a second availability filter removes both availability filters.",
+      "members": [
+        {
+          "filePath": "src/core/collection/collection.ts",
+          "syntaxKind": "MethodSignature",
+          "name": "getFilterRemovalUrl",
+          "value": "(filter: ProductFilter) => string",
+          "description": "Returns a query string with the store's filters and sort, minus the given filter. Use the query string in remove-filter links and buttons.\n\nThe string starts with `?` and leaves out URL params that the store doesn't manage."
+        },
+        {
+          "filePath": "src/core/collection/collection.ts",
+          "syntaxKind": "MethodSignature",
+          "name": "getState",
+          "value": "() => CollectionState",
+          "description": "Returns the current filter and sort state."
+        },
+        {
+          "filePath": "src/core/collection/collection.ts",
+          "syntaxKind": "MethodSignature",
+          "name": "handleFormSubmit",
+          "value": "(event: SubmitEvent) => void",
+          "description": "Applies a submitted filter form to the store. The form's filter fields replace the active filters. The sort changes only when the form includes a `sort_by` field.\n\nCall `event.preventDefault()` first, or the browser submits the form and leaves the page. The method throws a `TypeError` when the event target isn't a form element."
+        },
+        {
+          "filePath": "src/core/collection/collection.ts",
+          "syntaxKind": "MethodSignature",
+          "name": "matchesParams",
+          "value": "(searchParams: URLSearchParams) => boolean",
+          "description": "Returns `true` when the URL search params hold the same filters and sort as the store."
+        },
+        {
+          "filePath": "src/core/collection/collection.ts",
+          "syntaxKind": "MethodSignature",
+          "name": "reset",
+          "value": "() => void",
+          "description": "Clears all filters, restores the collection's default sort, and sets the status to `loading`."
+        },
+        {
+          "filePath": "src/core/collection/collection.ts",
+          "syntaxKind": "MethodSignature",
+          "name": "serializeToParams",
+          "value": "() => URLSearchParams",
+          "description": "Returns the filters and sort as URL search params. The result holds only the `filter.*` and `sort_by` keys."
+        },
+        {
+          "filePath": "src/core/collection/collection.ts",
+          "syntaxKind": "MethodSignature",
+          "name": "setFilters",
+          "value": "(filters: ProductFilter[]) => void",
+          "description": "Replaces the active filters and sets the status to `loading`."
+        },
+        {
+          "filePath": "src/core/collection/collection.ts",
+          "syntaxKind": "MethodSignature",
+          "name": "setOnBrowseChange",
+          "value": "(callback: () => void) => void",
+          "description": "Sets the callback that runs after each filter or sort change. Navigate to the new URL in the callback. Pass `null` to remove the callback."
+        },
+        {
+          "filePath": "src/core/collection/collection.ts",
+          "syntaxKind": "MethodSignature",
+          "name": "setSortByValue",
+          "value": "(sortByValue: string) => void",
+          "description": "Applies the sort key and direction from a Liquid-compatible `sort_by` value, such as `price-ascending`. An unrecognized value sets the sort key to `COLLECTION_DEFAULT`."
+        },
+        {
+          "filePath": "src/core/collection/collection.ts",
+          "syntaxKind": "MethodSignature",
+          "name": "setSortKey",
+          "value": "(sortKey: ProductCollectionSortKeys, reverse?: boolean) => void",
+          "description": "Changes the sort key and direction, then sets the status to `loading`. Omit `reverse` to sort in ascending order."
+        },
+        {
+          "filePath": "src/core/collection/collection.ts",
+          "syntaxKind": "MethodSignature",
+          "name": "settle",
+          "value": "() => void",
+          "description": "Sets the status to `idle`. Call the method when your loader returns the new products."
+        },
+        {
+          "filePath": "src/core/collection/collection.ts",
+          "syntaxKind": "MethodSignature",
+          "name": "subscribe",
+          "value": "(listener: (state: CollectionState) => void) => () => void",
+          "description": "Calls the listener on every state change. Returns a function that unsubscribes the listener."
+        },
+        {
+          "filePath": "src/core/collection/collection.ts",
+          "syntaxKind": "MethodSignature",
+          "name": "subscribeBrowseChange",
+          "value": "(listener: (state: CollectionState) => void) => () => void",
+          "description": "Adds a listener for filter and sort changes from store methods, such as for analytics. Returns a function that removes the listener.\n\nUnlike the single `setOnBrowseChange` callback, the store keeps any number of listeners and passes the new state to each. A listener runs only when the filters, sort key, or sort direction change, and before the browse change callback. Syncing from URL params and settling the store don't call it. An error in a listener is logged and doesn't stop the other listeners or the browse change callback."
+        },
+        {
+          "filePath": "src/core/collection/collection.ts",
+          "syntaxKind": "MethodSignature",
+          "name": "syncFromParams",
+          "value": "(searchParams: URLSearchParams) => void",
+          "description": "Updates the store from URL search params that differ from the current state. Call the method when the URL changes outside the store, such as on back or forward navigation. The method sets the status to `loading` and skips the browse change callback."
+        },
+        {
+          "filePath": "src/core/collection/collection.ts",
+          "syntaxKind": "MethodSignature",
+          "name": "toggleFilter",
+          "value": "(filter: ProductFilter) => void",
+          "description": "Adds the filter when it's inactive and removes the filter when it's active, then sets the status to `loading`."
+        },
+        {
+          "filePath": "src/core/collection/collection.ts",
+          "syntaxKind": "MethodSignature",
+          "name": "toggleFilterInput",
+          "value": "(input: string) => void",
+          "description": "Toggles the filter in a filter value's `input` JSON string from the Storefront API. The method does nothing when the string isn't valid JSON."
+        }
+      ]
+    }
+  },
   "GetCollectionViewAttributesGeneratedType": {
     "src/core/collection/collection-view.ts": {
       "filePath": "src/core/collection/collection-view.ts",
@@ -6017,6 +6662,282 @@
         "value": "void"
       },
       "value": "export function defineCollectionView(): void {\n  defineViewEventElement<StandardEvents.CollectionViewPayload>(\n    COLLECTION_VIEW_TAG_NAME,\n    (payload) => payload.collection.handle,\n  );\n}"
+    }
+  },
+  "GetCollectionUpdatesAttributesGeneratedType": {
+    "src/core/collection/collection-updates.ts": {
+      "filePath": "src/core/collection/collection-updates.ts",
+      "name": "GetCollectionUpdatesAttributesGeneratedType",
+      "description": "Returns the attributes of the collection updates element. Render them on a `COLLECTION_UPDATES_TAG_NAME` element on a framework without a Hydrogen binding, and render them again when the products count or the store status changes. Set the value as an HTML attribute, such as with `attr:` on Solid.",
+      "isPublicDocs": true,
+      "params": [
+        {
+          "name": "input1",
+          "description": "The collection, the number of products that the page loaded, and the store status.",
+          "value": "CollectionUpdatesOptions",
+          "filePath": "src/core/collection/collection-updates.ts"
+        }
+      ],
+      "returns": {
+        "filePath": "src/core/collection/collection-updates.ts",
+        "description": "The `collection-update-payload` attribute.",
+        "name": "Record<typeof PAYLOAD, string>",
+        "value": "Record<typeof PAYLOAD, string>"
+      },
+      "value": "export function getCollectionUpdatesAttributes({\n  collection,\n  productsCount,\n  status,\n}: CollectionUpdatesOptions): Record<typeof PAYLOAD, string> {\n  const payload: CollectionUpdatesOptions = {\n    collection: { id: collection.id, handle: collection.handle },\n    productsCount,\n    status,\n  };\n  return { [PAYLOAD]: JSON.stringify(payload) };\n}"
+    }
+  },
+  "CollectionUpdatesOptions": {
+    "src/core/collection/collection-updates.ts": {
+      "filePath": "src/core/collection/collection-updates.ts",
+      "name": "CollectionUpdatesOptions",
+      "description": "The collection, the number of its products that the page shows, and the store status.",
+      "members": [
+        {
+          "filePath": "src/core/collection/collection-updates.ts",
+          "syntaxKind": "PropertySignature",
+          "name": "collection",
+          "value": "CollectionViewCollection",
+          "description": "Collection fields from your Storefront API query."
+        },
+        {
+          "filePath": "src/core/collection/collection-updates.ts",
+          "syntaxKind": "PropertySignature",
+          "name": "productsCount",
+          "value": "number",
+          "description": "The Storefront API has no product total for a collection, so pass the number of products that the page loaded."
+        },
+        {
+          "filePath": "src/core/collection/collection-updates.ts",
+          "syntaxKind": "PropertySignature",
+          "name": "status",
+          "value": "'loading' | 'idle'",
+          "description": "The current `status` of the collection store. Render the attributes again when it changes. The element resolves update promises with the first `productsCount` that you render with `idle`."
+        }
+      ],
+      "value": "export interface CollectionUpdatesOptions {\n  /** Collection fields from your Storefront API query. */\n  collection: CollectionViewCollection;\n  /**\n   * The Storefront API has no product total for a collection, so pass the number of products that\n   * the page loaded.\n   */\n  productsCount: number;\n  /**\n   * The current `status` of the collection store. Render the attributes again when it changes.\n   * The element resolves update promises with the first `productsCount` that you render with\n   * `idle`.\n   */\n  status: CollectionState[\"status\"];\n}"
+    }
+  },
+  "CollectionUpdatesElement": {
+    "src/core/collection/collection-updates.ts": {
+      "filePath": "src/core/collection/collection-updates.ts",
+      "syntaxKind": "TypeAliasDeclaration",
+      "name": "CollectionUpdatesElement",
+      "value": "HTMLElement & { store: CollectionStore | null }",
+      "description": "The collection updates element, `COLLECTION_UPDATES_TAG_NAME`.\n\nSet `store` to the collection store of the page. The element then sends `shopify:collection:update` for each filter or sort change that the customer makes. The event has the products count before the change. Its promise resolves with the products count that the page renders after the store settles. Set `store` to `null` to stop. The element reads a value that you set before it is registered.",
+      "isPublicDocs": true
+    }
+  },
+  "CollectionUpdatesGeneratedType": {
+    "src/core/collection/collection-updates.ts": {
+      "filePath": "src/core/collection/collection-updates.ts",
+      "name": "CollectionUpdatesGeneratedType",
+      "description": "Describes an update element, such as `shopify-collection-updates`.",
+      "value": "collectionUpdates: UpdateEventOptions<\n  CollectionUpdatesOptions,\n  CollectionUpdatePayload,\n  StandardEvents.CollectionUpdateResult\n> = {\n  payloadAttribute: PAYLOAD,\n  getEventClass: (module) => module.CollectionUpdateEvent,\n  getKey: ({ collection }) => collection.handle,\n  getResult: ({ productsCount }) => ({ productsCount }),\n  createEventPayload: ({ collection, productsCount }, { filters, sortKey }) => {\n    const payload: CollectionUpdatePayload = {\n      collection: { id: collection.id, handle: collection.handle, productsCount },\n    };\n    if (filters.length > 0) payload.productFilters = filters;\n    if (sortKey !== undefined) payload.sortKey = sortKey;\n    return payload;\n  },\n  abortMessage:\n    \"The collection or its store changed, or the updates element disconnected, before the update finished.\",\n}"
+    }
+  },
+  "UpdateEventOptions": {
+    "src/core/collection/update-event-element.ts": {
+      "filePath": "src/core/collection/update-event-element.ts",
+      "name": "UpdateEventOptions",
+      "description": "Describes an update element, such as `shopify-collection-updates`.",
+      "members": [
+        {
+          "filePath": "src/core/collection/update-event-element.ts",
+          "syntaxKind": "PropertySignature",
+          "name": "abortMessage",
+          "value": "string",
+          "description": "Message of the `AbortError` that rejects pending updates."
+        },
+        {
+          "filePath": "src/core/collection/update-event-element.ts",
+          "syntaxKind": "MethodSignature",
+          "name": "createEventPayload",
+          "value": "(payload: Payload, state: CollectionState) => EventPayload",
+          "description": "Returns the event payload without the promise. The payload still has the result before the change."
+        },
+        {
+          "filePath": "src/core/collection/update-event-element.ts",
+          "syntaxKind": "MethodSignature",
+          "name": "getEventClass",
+          "value": "(module: StandardEventsModule) => UpdateEventClass<EventPayload, Result>",
+          "description": "Returns the event class from the Standard Events module."
+        },
+        {
+          "filePath": "src/core/collection/update-event-element.ts",
+          "syntaxKind": "MethodSignature",
+          "name": "getKey",
+          "value": "(payload: Payload) => unknown",
+          "description": "Returns the page identity, such as the collection handle. A new key aborts pending updates."
+        },
+        {
+          "filePath": "src/core/collection/update-event-element.ts",
+          "syntaxKind": "MethodSignature",
+          "name": "getResult",
+          "value": "(payload: Payload) => Result",
+          "description": "Returns the value that resolves the update promises, such as `{ productsCount }`."
+        },
+        {
+          "filePath": "src/core/collection/update-event-element.ts",
+          "syntaxKind": "PropertySignature",
+          "name": "payloadAttribute",
+          "value": "string",
+          "description": "Attribute with the element's JSON payload, such as `collection-update-payload`."
+        }
+      ],
+      "value": "export interface UpdateEventOptions<Payload extends UpdateElementPayload, EventPayload, Result> {\n  /** Attribute with the element's JSON payload, such as `collection-update-payload`. */\n  payloadAttribute: string;\n  /** Returns the event class from the Standard Events module. */\n  getEventClass(module: StandardEventsModule): UpdateEventClass<EventPayload, Result>;\n  /** Returns the page identity, such as the collection handle. A new key aborts pending updates. */\n  getKey(payload: Payload): unknown;\n  /** Returns the value that resolves the update promises, such as `{ productsCount }`. */\n  getResult(payload: Payload): Result;\n  /** Returns the event payload without the promise. The payload still has the result before the change. */\n  createEventPayload(payload: Payload, state: CollectionState): EventPayload;\n  /** Message of the `AbortError` that rejects pending updates. */\n  abortMessage: string;\n}"
+    }
+  },
+  "StandardEventsModule": {
+    "src/core/collection/update-event-element.ts": {
+      "filePath": "src/core/collection/update-event-element.ts",
+      "name": "StandardEventsModule",
+      "description": "",
+      "members": [
+        {
+          "filePath": "src/core/collection/update-event-element.ts",
+          "syntaxKind": "InterfaceDeclaration",
+          "name": "CartAttributesUpdateEvent",
+          "value": "typeof CartAttributesUpdateEvent",
+          "description": ""
+        },
+        {
+          "filePath": "src/core/collection/update-event-element.ts",
+          "syntaxKind": "InterfaceDeclaration",
+          "name": "CartDiscountUpdateEvent",
+          "value": "typeof CartDiscountUpdateEvent",
+          "description": ""
+        },
+        {
+          "filePath": "src/core/collection/update-event-element.ts",
+          "syntaxKind": "VariableDeclaration",
+          "name": "CartLinesUpdateEvent",
+          "value": "typeof CartLinesUpdateEventImpl",
+          "description": ""
+        },
+        {
+          "filePath": "src/core/collection/update-event-element.ts",
+          "syntaxKind": "InterfaceDeclaration",
+          "name": "CartNoteUpdateEvent",
+          "value": "typeof CartNoteUpdateEvent",
+          "description": ""
+        },
+        {
+          "filePath": "src/core/collection/update-event-element.ts",
+          "syntaxKind": "InterfaceDeclaration",
+          "name": "CollectionUpdateEvent",
+          "value": "typeof CollectionUpdateEvent",
+          "description": ""
+        },
+        {
+          "filePath": "src/core/collection/update-event-element.ts",
+          "syntaxKind": "InterfaceDeclaration",
+          "name": "SearchUpdateEvent",
+          "value": "typeof SearchUpdateEvent",
+          "description": ""
+        }
+      ],
+      "value": "interface StandardEventsModule extends Pick<\n  typeof StandardEvents,\n  Extract<keyof typeof StandardEvents, `${string}UpdateEvent`>\n> {}"
+    }
+  },
+  "UpdateEventClass": {
+    "src/core/collection/update-event-element.ts": {
+      "filePath": "src/core/collection/update-event-element.ts",
+      "name": "UpdateEventClass",
+      "description": "A Standard Events update event class, such as `CollectionUpdateEvent`.",
+      "members": [
+        {
+          "filePath": "src/core/collection/update-event-element.ts",
+          "syntaxKind": "MethodSignature",
+          "name": "createPromise",
+          "value": "() => { promise: Promise<Result>; } & Settlers<Result>",
+          "description": ""
+        }
+      ],
+      "value": "interface UpdateEventClass<EventPayload, Result> {\n  new (payload: EventPayload & { promise: Promise<Result> }): Event;\n  createPromise(): { promise: Promise<Result> } & Settlers<Result>;\n}"
+    }
+  },
+  "Settlers": {
+    "src/core/collection/update-event-element.ts": {
+      "filePath": "src/core/collection/update-event-element.ts",
+      "syntaxKind": "TypeAliasDeclaration",
+      "name": "Settlers",
+      "value": "{\n  resolve(value: Result): void;\n  reject(reason?: unknown): void;\n}",
+      "description": "",
+      "members": [
+        {
+          "filePath": "src/core/collection/update-event-element.ts",
+          "syntaxKind": "MethodSignature",
+          "name": "reject",
+          "value": "(reason?: unknown) => void",
+          "description": ""
+        },
+        {
+          "filePath": "src/core/collection/update-event-element.ts",
+          "syntaxKind": "MethodSignature",
+          "name": "resolve",
+          "value": "(value: Result) => void",
+          "description": ""
+        }
+      ]
+    }
+  },
+  "CollectionUpdatePayload": {
+    "src/core/collection/collection-updates.ts": {
+      "filePath": "src/core/collection/collection-updates.ts",
+      "syntaxKind": "TypeAliasDeclaration",
+      "name": "CollectionUpdatePayload",
+      "value": "Omit<StandardEvents.CollectionUpdatePayload, \"promise\">",
+      "description": "",
+      "members": [
+        {
+          "filePath": "src/core/collection/collection-updates.ts",
+          "syntaxKind": "PropertySignature",
+          "name": "collection",
+          "value": "{ id: string; handle: string; productsCount: number; }",
+          "description": ""
+        },
+        {
+          "filePath": "src/core/collection/collection-updates.ts",
+          "syntaxKind": "PropertySignature",
+          "name": "detail",
+          "value": "CollectionUpdatePayloadDetail",
+          "description": "Optional custom data. Use this to provide additional data for internal use in the theme.",
+          "isOptional": true
+        },
+        {
+          "filePath": "src/core/collection/collection-updates.ts",
+          "syntaxKind": "PropertySignature",
+          "name": "productFilters",
+          "value": "{ available?: boolean; category?: { id: string; }; price?: { min?: number; max?: number; }; productMetafield?: { namespace: string; key: string; value?: string; }; productType?: string; productVendor?: string; tag?: string; taxonomyMetafield?: { key: string; value: string; }; variantMetafield?: { namespace: string; key: string; value?: string; }; variantOption?: { name: string; value?: string; }; }[]",
+          "description": "",
+          "isOptional": true
+        },
+        {
+          "filePath": "src/core/collection/collection-updates.ts",
+          "syntaxKind": "PropertySignature",
+          "name": "sortKey",
+          "value": "'BEST_SELLING' | 'COLLECTION_DEFAULT' | 'CREATED' | 'ID' | 'MANUAL' | 'PRICE' | 'RELEVANCE' | 'TITLE'",
+          "description": "",
+          "isOptional": true
+        }
+      ]
+    }
+  },
+  "DefineCollectionUpdatesGeneratedType": {
+    "src/core/collection/collection-updates.ts": {
+      "filePath": "src/core/collection/collection-updates.ts",
+      "name": "DefineCollectionUpdatesGeneratedType",
+      "description": "Registers the collection updates custom element in the browser right away. The element loads Shopify's Standard Events module only to create events. The function does nothing on the server or when the element is already registered. `initializeShopifyScripts` and the `ShopifyScripts` component call it for you.",
+      "isPublicDocs": true,
+      "params": [],
+      "returns": {
+        "filePath": "src/core/collection/collection-updates.ts",
+        "description": "",
+        "name": "void",
+        "value": "void"
+      },
+      "value": "export function defineCollectionUpdates(): void {\n  defineUpdateEventElement(COLLECTION_UPDATES_TAG_NAME, collectionUpdates);\n}"
     }
   },
   "GetProductViewAttributesGeneratedType": {
@@ -6186,7 +7107,7 @@
     "src/core/shopify-scripts/initialize.ts": {
       "filePath": "src/core/shopify-scripts/initialize.ts",
       "name": "InitializeShopifyScriptsGeneratedType",
-      "description": "Starts Shopify's scripts in the browser for frameworks without a Hydrogen binding. Call it after hydration, with the consent configuration that you passed to `getShopifyScriptTags`.\n\nThe function sets up `window.Shopify.routes`, registers the product and collection view elements, and sends a page view event on load and after each navigation that changes the path or query. In the custom banner consent mode, Hydrogen calls your setup callback after the Customer Privacy API loads. A custom banner configuration without a setup callback logs a warning, and analytics events stay blocked. When the browser supports WebMCP, the function also loads Shopify's WebMCP tools. Set `webMcp` to `false` to skip them.",
+      "description": "Starts Shopify's scripts in the browser for frameworks without a Hydrogen binding. Call it after hydration, with the consent configuration that you passed to `getShopifyScriptTags`.\n\nThe function sets up `window.Shopify.routes`, registers the product view, collection view, and collection updates elements, and sends a page view event on load and after each navigation that changes the path or query. In the custom banner consent mode, Hydrogen calls your setup callback after the Customer Privacy API loads. A custom banner configuration without a setup callback logs a warning, and analytics events stay blocked. When the browser supports WebMCP, the function also loads Shopify's WebMCP tools. Set `webMcp` to `false` to skip them.",
       "isPublicDocs": true,
       "params": [
         {
@@ -6202,7 +7123,7 @@
         "name": "Promise<boolean | void>",
         "value": "Promise<boolean | void>"
       },
-      "value": "export function initializeShopifyScripts({\n  consent,\n  navigate,\n  nonce,\n  routes,\n  webMcp = true,\n}: InitializeShopifyScriptsOptions): Promise<boolean | void> {\n  configureShopifyRouting({ navigate, routes });\n  initializeShopifyPageViewEvents();\n  defineProductView();\n  defineCollectionView();\n  if (__DEV__) observeNavigation(warnOnLocaleChangingNavigation);\n\n  if (consent?.mode === \"custom-banner\") {\n    if (typeof consent.setup !== \"function\") {\n      log.warn(\n        \"custom-banner requires a consent.setup callback; analytics delivery remains blocked until setup completes\",\n      );\n    } else {\n      try {\n        initializeCustomConsent(consent.setup);\n      } catch (error) {\n        log.error(\"custom consent initialization failed\", { error });\n      }\n    }\n  }\n\n  if (!webMcp) return Promise.resolve();\n\n  return loadShopifyWebMcpTools(nonce);\n}"
+      "value": "export function initializeShopifyScripts({\n  consent,\n  navigate,\n  nonce,\n  routes,\n  webMcp = true,\n}: InitializeShopifyScriptsOptions): Promise<boolean | void> {\n  configureShopifyRouting({ navigate, routes });\n  initializeShopifyPageViewEvents();\n  defineProductView();\n  defineCollectionView();\n  defineCollectionUpdates();\n  if (__DEV__) observeNavigation(warnOnLocaleChangingNavigation);\n\n  if (consent?.mode === \"custom-banner\") {\n    if (typeof consent.setup !== \"function\") {\n      log.warn(\n        \"custom-banner requires a consent.setup callback; analytics delivery remains blocked until setup completes\",\n      );\n    } else {\n      try {\n        initializeCustomConsent(consent.setup);\n      } catch (error) {\n        log.error(\"custom consent initialization failed\", { error });\n      }\n    }\n  }\n\n  if (!webMcp) return Promise.resolve();\n\n  return loadShopifyWebMcpTools(nonce);\n}"
     }
   },
   "GetShopifyScriptTagsGeneratedType": {
@@ -8596,644 +9517,6 @@
       ]
     }
   },
-  "AvailableFilter": {
-    "src/core/collection/state.ts": {
-      "filePath": "src/core/collection/state.ts",
-      "name": "AvailableFilter",
-      "description": "A filter that the Storefront API returns for the current collection or search results. Render filter controls, such as checkboxes, swatches, and sliders, from the filter's values.",
-      "isPublicDocs": true,
-      "members": [
-        {
-          "filePath": "src/core/collection/state.ts",
-          "syntaxKind": "PropertySignature",
-          "name": "id",
-          "value": "string",
-          "description": "ID of the filter."
-        },
-        {
-          "filePath": "src/core/collection/state.ts",
-          "syntaxKind": "PropertySignature",
-          "name": "label",
-          "value": "string",
-          "description": "Name to display, such as \"Color\", \"Size\", or \"Price\"."
-        },
-        {
-          "filePath": "src/core/collection/state.ts",
-          "syntaxKind": "PropertySignature",
-          "name": "presentation",
-          "value": "FilterPresentation | null",
-          "description": "How the storefront displays the filter's values. The Storefront API returns a value only for `LIST` filters and `null` for other filters.",
-          "isOptional": true
-        },
-        {
-          "filePath": "src/core/collection/state.ts",
-          "syntaxKind": "PropertySignature",
-          "name": "type",
-          "value": "FilterType",
-          "description": "Kind of input, such as a boolean toggle, a multi-select list, or a price range."
-        },
-        {
-          "filePath": "src/core/collection/state.ts",
-          "syntaxKind": "PropertySignature",
-          "name": "values",
-          "value": "AvailableFilterValue<TValue>[]",
-          "description": "Values that a customer can select, each with a label, a product count, and a filter input."
-        }
-      ],
-      "value": "export interface AvailableFilter<\n  TValue extends BaseAvailableFilterValue = BaseAvailableFilterValue,\n> {\n  /** ID of the filter. */\n  id: string;\n  /** Name to display, such as \"Color\", \"Size\", or \"Price\". */\n  label: string;\n  /** Kind of input, such as a boolean toggle, a multi-select list, or a price range. */\n  type: FilterType;\n  /**\n   * How the storefront displays the filter's values. The Storefront API\n   * returns a value only for `LIST` filters and `null` for other filters.\n   */\n  presentation?: FilterPresentation | null;\n  /** Values that a customer can select, each with a label, a product count, and a filter input. */\n  values: AvailableFilterValue<TValue>[];\n}"
-    }
-  },
-  "FilterPresentation": {
-    "src/core/collection/state.ts": {
-      "filePath": "src/core/collection/state.ts",
-      "syntaxKind": "TypeAliasDeclaration",
-      "name": "FilterPresentation",
-      "value": "\"IMAGE\" | \"SWATCH\" | \"TEXT\"",
-      "description": "How the storefront displays a filter's values."
-    }
-  },
-  "FilterType": {
-    "src/core/collection/state.ts": {
-      "filePath": "src/core/collection/state.ts",
-      "syntaxKind": "TypeAliasDeclaration",
-      "name": "FilterType",
-      "value": "\"BOOLEAN\" | \"LIST\" | \"PRICE_RANGE\" | (string & {})",
-      "description": "The kind of input a filter takes, such as a boolean toggle, a multi-select list, or a price range."
-    }
-  },
-  "AvailableFilterValue": {
-    "src/core/collection/state.ts": {
-      "filePath": "src/core/collection/state.ts",
-      "syntaxKind": "TypeAliasDeclaration",
-      "name": "AvailableFilterValue",
-      "value": "BaseAvailableFilterValue & PickIfPresent<TValue, \"swatch\">",
-      "description": "A value that a customer can select within an available filter.\n\nPass your Storefront API query's value type as `TValue` to include the `swatch` field when your query selects it."
-    }
-  },
-  "BaseAvailableFilterValue": {
-    "src/core/collection/state.ts": {
-      "filePath": "src/core/collection/state.ts",
-      "name": "BaseAvailableFilterValue",
-      "description": "The ID, label, product count, and filter input that every filter value has.",
-      "members": [
-        {
-          "filePath": "src/core/collection/state.ts",
-          "syntaxKind": "PropertySignature",
-          "name": "count",
-          "value": "number",
-          "description": "Number of products in the current results that match the value."
-        },
-        {
-          "filePath": "src/core/collection/state.ts",
-          "syntaxKind": "PropertySignature",
-          "name": "id",
-          "value": "string",
-          "description": "ID of the filter value."
-        },
-        {
-          "filePath": "src/core/collection/state.ts",
-          "syntaxKind": "PropertySignature",
-          "name": "input",
-          "value": "string",
-          "description": "Filter input as a JSON string. Pass the string to `toggleFilterInput()` or `isFilterInputActive`."
-        },
-        {
-          "filePath": "src/core/collection/state.ts",
-          "syntaxKind": "PropertySignature",
-          "name": "label",
-          "value": "string",
-          "description": "Label to display, such as \"Red\" or \"Nike\"."
-        }
-      ],
-      "value": "interface BaseAvailableFilterValue {\n  /** ID of the filter value. */\n  id: string;\n  /** Label to display, such as \"Red\" or \"Nike\". */\n  label: string;\n  /** Number of products in the current results that match the value. */\n  count: number;\n  /** Filter input as a JSON string. Pass the string to `toggleFilterInput()` or `isFilterInputActive`. */\n  input: string;\n}"
-    }
-  },
-  "PickIfPresent": {
-    "src/core/collection/state.ts": {
-      "filePath": "src/core/collection/state.ts",
-      "syntaxKind": "TypeAliasDeclaration",
-      "name": "PickIfPresent",
-      "value": "TKey extends keyof TValue\n  ? Pick<TValue, TKey>\n  : {}",
-      "description": "Copies a field from your query's value type when your query selects the field. Otherwise, the type adds no fields."
-    }
-  },
-  "CreateInitialCollectionStateGeneratedType": {
-    "src/core/collection/state.ts": {
-      "filePath": "src/core/collection/state.ts",
-      "name": "CreateInitialCollectionStateGeneratedType",
-      "description": "Creates collection state with no filters and the default sort for a collection handle.",
-      "isPublicDocs": true,
-      "params": [
-        {
-          "name": "handle",
-          "description": "Collection handle, such as `shoes`.",
-          "value": "string",
-          "filePath": "src/core/collection/state.ts"
-        }
-      ],
-      "returns": {
-        "filePath": "src/core/collection/state.ts",
-        "description": "A state with no filters, the collection's default sort, an ascending direction, and an idle status.",
-        "name": "CollectionState",
-        "value": "CollectionState"
-      },
-      "value": "export function createInitialCollectionState(handle: string): CollectionState {\n  return {\n    handle,\n    filters: [],\n    sortKey: undefined,\n    reverse: false,\n    status: \"idle\",\n  };\n}"
-    }
-  },
-  "CollectionState": {
-    "src/core/collection/state.ts": {
-      "filePath": "src/core/collection/state.ts",
-      "name": "CollectionState",
-      "description": "The customer's filter and sort choices and the loading status.\n\nProducts, product counts, available filters, and the collection ID come from your loader data.",
-      "members": [
-        {
-          "filePath": "src/core/collection/state.ts",
-          "syntaxKind": "PropertySignature",
-          "name": "filters",
-          "value": "ProductFilter[]",
-          "description": "Active product filters, matching the `filter.*` URL params."
-        },
-        {
-          "filePath": "src/core/collection/state.ts",
-          "syntaxKind": "PropertySignature",
-          "name": "handle",
-          "value": "string",
-          "description": "Collection handle, such as `shoes`."
-        },
-        {
-          "filePath": "src/core/collection/state.ts",
-          "syntaxKind": "PropertySignature",
-          "name": "reverse",
-          "value": "boolean",
-          "description": "`true` for a descending sort. The URL's sort value then ends in `-descending`."
-        },
-        {
-          "filePath": "src/core/collection/state.ts",
-          "syntaxKind": "PropertySignature",
-          "name": "sortKey",
-          "value": "ProductCollectionSortKeys | undefined",
-          "description": "Storefront API sort key, or `undefined` for the collection's default sort."
-        },
-        {
-          "filePath": "src/core/collection/state.ts",
-          "syntaxKind": "PropertySignature",
-          "name": "status",
-          "value": "'idle' | 'loading'",
-          "description": "Reads `loading` from a filter or sort change until the store settles, and `idle` when the results match the filters and sort. Show a loading state while the value is `loading`."
-        }
-      ],
-      "value": "export interface CollectionState {\n  /** Collection handle, such as `shoes`. */\n  handle: string;\n\n  /** Active product filters, matching the `filter.*` URL params. */\n  filters: ProductFilter[];\n  /** Storefront API sort key, or `undefined` for the collection's default sort. */\n  sortKey: ProductCollectionSortKeys | undefined;\n  /** `true` for a descending sort. The URL's sort value then ends in `-descending`. */\n  reverse: boolean;\n  /** Reads `loading` from a filter or sort change until the store settles, and `idle` when the results match the filters and sort. Show a loading state while the value is `loading`. */\n  status: \"idle\" | \"loading\";\n}"
-    }
-  },
-  "ParseCollectionParamsGeneratedType": {
-    "src/core/collection/url.ts": {
-      "filePath": "src/core/collection/url.ts",
-      "name": "ParseCollectionParamsGeneratedType",
-      "description": "Reads collection filters and sort from URL search params. Pass the result to your Storefront API collection query.\n\nThe function reads Liquid-compatible `filter.p.*` and `filter.v.*` keys and the `sort_by` param.\n\nA URL that sets availability to both in stock and out of stock produces no availability filter. A price bound must be a non-negative number as `<input type=\"number\">` submits it, such as `12.5`; the function ignores any other value, such as `12,50`, the same way on the server and in the browser. The function recognizes the best-selling and manual sort values, plus created, price, and title with an ascending or descending suffix. For other sort values, the sort key is `undefined`. The `parseSortByValue` function also recognizes relevance, collection default, and ID.",
-      "isPublicDocs": true,
-      "params": [
-        {
-          "name": "searchParams",
-          "description": "URL search params to read.",
-          "value": "URLSearchParams",
-          "filePath": "src/core/collection/url.ts"
-        }
-      ],
-      "returns": {
-        "filePath": "src/core/collection/url.ts",
-        "description": "The filters, sort key, and sort direction from the URL.",
-        "name": "CollectionParams",
-        "value": "CollectionParams"
-      },
-      "value": "export function parseCollectionParams(searchParams: URLSearchParams): CollectionParams {\n  const filters = parseProductFilters(searchParams);\n  const sortKey = parseCollectionSortKey(searchParams);\n  const rawSortBy = searchParams.get(\"sort_by\");\n  const reverse = rawSortBy?.endsWith(SORT_BY_DESCENDING_SUFFIX) ?? false;\n\n  return { filters, sortKey, reverse };\n}"
-    }
-  },
-  "CollectionParams": {
-    "src/core/collection/url.ts": {
-      "filePath": "src/core/collection/url.ts",
-      "name": "CollectionParams",
-      "description": "The filters, sort key, and sort direction in a collection URL.",
-      "members": [
-        {
-          "filePath": "src/core/collection/url.ts",
-          "syntaxKind": "PropertySignature",
-          "name": "filters",
-          "value": "ProductFilter[]",
-          "description": "Active product filters from the `filter.*` URL params.\n\nThe filters use the Storefront Standard Events filter type. When your query variables use generated Storefront API types, cast the filters to the generated filter type where you pass them as variables."
-        },
-        {
-          "filePath": "src/core/collection/url.ts",
-          "syntaxKind": "PropertySignature",
-          "name": "reverse",
-          "value": "boolean",
-          "description": "`true` when the `sort_by` value ends with `-descending`."
-        },
-        {
-          "filePath": "src/core/collection/url.ts",
-          "syntaxKind": "PropertySignature",
-          "name": "sortKey",
-          "value": "ProductCollectionSortKeys | undefined",
-          "description": "Storefront API sort key from the `sort_by` param, or `undefined` when the param is missing or unrecognized."
-        }
-      ],
-      "value": "export interface CollectionParams {\n  /**\n   * Active product filters from the `filter.*` URL params.\n   *\n   * The filters use the Storefront Standard Events filter type. When your query variables use generated Storefront API types, cast the filters to the generated filter type where you pass them as variables.\n   */\n  filters: ProductFilter[];\n  /** Storefront API sort key from the `sort_by` param, or `undefined` when the param is missing or unrecognized. */\n  sortKey: ProductCollectionSortKeys | undefined;\n  /** `true` when the `sort_by` value ends with `-descending`. */\n  reverse: boolean;\n}"
-    }
-  },
-  "SerializeCollectionParamsGeneratedType": {
-    "src/core/collection/url.ts": {
-      "filePath": "src/core/collection/url.ts",
-      "name": "SerializeCollectionParamsGeneratedType",
-      "description": "Converts collection filters and sort to URL search params with Liquid-compatible keys. Use the result to build collection URLs.\n\nThe result holds only the `filter.*` and `sort_by` keys. The function leaves out `sort_by` for the collection's default sort.\n\nCategory filters convert to `filter.p.category`, which `parseCollectionParams` doesn't read. A price filter with a minimum and a maximum produces two params. To build a filter checkbox, parse a filter value's `input` string and convert the parsed filter. The resulting entries give the checkbox name and value.",
-      "isPublicDocs": true,
-      "params": [
-        {
-          "name": "state",
-          "description": "The filters, sort key, and sort direction to convert.",
-          "value": "Pick<CollectionState, \"reverse\" | \"filters\" | \"sortKey\">",
-          "filePath": "src/core/collection/url.ts"
-        }
-      ],
-      "returns": {
-        "filePath": "src/core/collection/url.ts",
-        "description": "URL search params that hold the filters and sort.",
-        "name": "URLSearchParams",
-        "value": "URLSearchParams"
-      },
-      "value": "export function serializeCollectionParams(\n  state: Pick<CollectionState, \"filters\" | \"sortKey\" | \"reverse\">,\n): URLSearchParams {\n  const params = new URLSearchParams();\n\n  for (const filter of state.filters) {\n    serializeFilter(params, filter);\n  }\n\n  if (state.sortKey) {\n    params.set(\"sort_by\", getSortByValue(state.sortKey, state.reverse));\n  }\n\n  return params;\n}"
-    }
-  },
-  "NormalizeCollectionSearchGeneratedType": {
-    "src/core/collection/url.ts": {
-      "filePath": "src/core/collection/url.ts",
-      "name": "NormalizeCollectionSearchGeneratedType",
-      "description": "Removes a leading `?` from a search string. Normalize search strings before you compare them.",
-      "isPublicDocs": true,
-      "params": [
-        {
-          "name": "search",
-          "description": "The search string from your router, with or without a leading `?`.",
-          "value": "string",
-          "filePath": "src/core/collection/url.ts"
-        }
-      ],
-      "returns": {
-        "filePath": "src/core/collection/url.ts",
-        "description": "The search string without a leading `?`.",
-        "name": "string",
-        "value": "string"
-      },
-      "value": "export function normalizeCollectionSearch(search: string): string {\n  return search.startsWith(\"?\") ? search.slice(1) : search;\n}"
-    }
-  },
-  "GetFilterRemovalUrlGeneratedType": {
-    "src/core/collection/url.ts": {
-      "filePath": "src/core/collection/url.ts",
-      "name": "GetFilterRemovalUrlGeneratedType",
-      "description": "Builds a query string from the current URL params, minus the given filter. Use the string in plain remove-filter links.\n\nThe function keeps every other param and drops the `before` and `after` pagination cursors, which sends the customer to the first page of results.",
-      "isPublicDocs": true,
-      "params": [
-        {
-          "name": "currentParams",
-          "description": "The current URL search params.",
-          "value": "URLSearchParams",
-          "filePath": "src/core/collection/url.ts"
-        },
-        {
-          "name": "filter",
-          "description": "The filter to remove from the URL.",
-          "value": "ProductFilter",
-          "filePath": "src/core/collection/url.ts"
-        }
-      ],
-      "returns": {
-        "filePath": "src/core/collection/url.ts",
-        "description": "A query string that starts with `?`. The string is `?` alone when no params remain.",
-        "name": "string",
-        "value": "string"
-      },
-      "value": "export function getFilterRemovalUrl(currentParams: URLSearchParams, filter: ProductFilter): string {\n  const result = new URLSearchParams(currentParams);\n  removeFilterParams(result, filter);\n  clearPaginationCursors(result);\n  const serialized = result.toString();\n  return serialized ? `?${serialized}` : \"?\";\n}"
-    }
-  },
-  "GetSortByValueGeneratedType": {
-    "src/core/collection/url.ts": {
-      "filePath": "src/core/collection/url.ts",
-      "name": "GetSortByValueGeneratedType",
-      "description": "Converts a Storefront API sort key and direction to a Liquid-compatible `sort_by` value, such as `price-ascending` or `best-selling`.\n\nOnly the price, title, created, and ID sort keys get a direction suffix. Other sort keys, such as best selling, ignore the direction.",
-      "isPublicDocs": true,
-      "params": [
-        {
-          "name": "sortKey",
-          "description": "Storefront API product collection sort key.",
-          "value": "ProductCollectionSortKeys",
-          "filePath": "src/core/collection/url.ts"
-        },
-        {
-          "name": "reverse",
-          "description": "`true` for descending, `false` for ascending.",
-          "value": "boolean",
-          "filePath": "src/core/collection/url.ts"
-        }
-      ],
-      "returns": {
-        "filePath": "src/core/collection/url.ts",
-        "description": "The value for the `sort_by` URL param.",
-        "name": "string",
-        "value": "string"
-      },
-      "value": "export function getSortByValue(sortKey: ProductCollectionSortKeys, reverse: boolean): string {\n  const base = SORT_KEY_TO_SORT_BY[sortKey] ?? sortKey.toLowerCase();\n\n  if (!isDirectionalSortKey(sortKey)) return base;\n\n  return reverse ? `${base}-descending` : `${base}-ascending`;\n}"
-    }
-  },
-  "ParseSortByValueGeneratedType": {
-    "src/core/collection/url.ts": {
-      "filePath": "src/core/collection/url.ts",
-      "name": "ParseSortByValueGeneratedType",
-      "description": "Converts a Liquid-compatible `sort_by` value to a Storefront API sort key and direction. The `getSortByValue` function does the opposite conversion.\n\nFor unrecognized values, the sort key is `undefined`.",
-      "isPublicDocs": true,
-      "params": [
-        {
-          "name": "value",
-          "description": "A `sort_by` value, such as `price-ascending` or `best-selling`.",
-          "value": "string",
-          "filePath": "src/core/collection/url.ts"
-        }
-      ],
-      "returns": {
-        "filePath": "src/core/collection/url.ts",
-        "description": "The sort key and `reverse`, which reads `true` for descending values.",
-        "name": "{\n  sortKey: ProductCollectionSortKeys | undefined;\n  reverse: boolean;\n}",
-        "value": "{\n  sortKey: ProductCollectionSortKeys | undefined;\n  reverse: boolean;\n}"
-      },
-      "value": "export function parseSortByValue(value: string): {\n  sortKey: ProductCollectionSortKeys | undefined;\n  reverse: boolean;\n} {\n  if (value.endsWith(SORT_BY_DESCENDING_SUFFIX)) {\n    const base = value.slice(0, -SORT_BY_DESCENDING_SUFFIX.length);\n    return { sortKey: SORT_BY_TO_SORT_KEY[base], reverse: true };\n  }\n\n  if (value.endsWith(SORT_BY_ASCENDING_SUFFIX)) {\n    const base = value.slice(0, -SORT_BY_ASCENDING_SUFFIX.length);\n    return { sortKey: SORT_BY_TO_SORT_KEY[base], reverse: false };\n  }\n\n  return { sortKey: SORT_BY_TO_SORT_KEY[value], reverse: false };\n}"
-    }
-  },
-  "FilterEqualsGeneratedType": {
-    "src/core/collection/url.ts": {
-      "filePath": "src/core/collection/url.ts",
-      "name": "FilterEqualsGeneratedType",
-      "description": "Checks whether two product filters match.\n\nPrice filters match when the minimum and maximum are equal, including ranges that set only one bound.",
-      "isPublicDocs": true,
-      "params": [
-        {
-          "name": "a",
-          "description": "The first filter to compare.",
-          "value": "ProductFilter",
-          "filePath": "src/core/collection/url.ts"
-        },
-        {
-          "name": "b",
-          "description": "The second filter to compare.",
-          "value": "ProductFilter",
-          "filePath": "src/core/collection/url.ts"
-        }
-      ],
-      "returns": {
-        "filePath": "src/core/collection/url.ts",
-        "description": "`true` when both filters are the same kind with the same values. `false` for different kinds or unrecognized filters.",
-        "name": "boolean",
-        "value": "boolean"
-      },
-      "value": "export function filterEquals(a: ProductFilter, b: ProductFilter): boolean {\n  const kindA = filterKind(a);\n  const kindB = filterKind(b);\n  if (kindA !== kindB || kindA == null) return false;\n\n  switch (kindA) {\n    case \"tag\":\n      return a.tag === b.tag;\n    case \"available\":\n      return a.available === b.available;\n    case \"price\":\n      return priceRangeEquals(a.price, b.price);\n    case \"productType\":\n      return a.productType === b.productType;\n    case \"productVendor\":\n      return a.productVendor === b.productVendor;\n    case \"variantOption\": {\n      const aOpt = a.variantOption;\n      const bOpt = b.variantOption;\n      if (aOpt == null || bOpt == null) return false;\n      return aOpt.name === bOpt.name && (aOpt.value ?? \"\") === (bOpt.value ?? \"\");\n    }\n    case \"productMetafield\": {\n      const aMeta = a.productMetafield;\n      const bMeta = b.productMetafield;\n      if (aMeta == null || bMeta == null) return false;\n      return metafieldEquals(aMeta, bMeta);\n    }\n    case \"variantMetafield\": {\n      const aMeta = a.variantMetafield;\n      const bMeta = b.variantMetafield;\n      if (aMeta == null || bMeta == null) return false;\n      return metafieldEquals(aMeta, bMeta);\n    }\n    case \"taxonomyMetafield\": {\n      const aMeta = a.taxonomyMetafield;\n      const bMeta = b.taxonomyMetafield;\n      if (aMeta == null || bMeta == null) return false;\n      return aMeta.key === bMeta.key && aMeta.value === bMeta.value;\n    }\n    case \"category\": {\n      const aCat = a.category;\n      const bCat = b.category;\n      if (aCat == null || bCat == null) return false;\n      return aCat.id === bCat.id;\n    }\n  }\n}"
-    }
-  },
-  "IsFilterInputActiveGeneratedType": {
-    "src/core/collection/url.ts": {
-      "filePath": "src/core/collection/url.ts",
-      "name": "IsFilterInputActiveGeneratedType",
-      "description": "Checks whether a filter value's `input` JSON string from the Storefront API matches an active filter. Use the result to set the checked state of a filter control.\n\nThe function compares filters the same way as `filterEquals`.",
-      "isPublicDocs": true,
-      "params": [
-        {
-          "name": "activeFilters",
-          "description": "The active filters, such as `filters` from the collection state.",
-          "value": "ProductFilter[]",
-          "filePath": "src/core/collection/url.ts"
-        },
-        {
-          "name": "input",
-          "description": "The filter value's `input` JSON string.",
-          "value": "string",
-          "filePath": "src/core/collection/url.ts"
-        }
-      ],
-      "returns": {
-        "filePath": "src/core/collection/url.ts",
-        "description": "`true` when the parsed input matches an active filter. `false` when the input matches no active filter or isn't valid JSON.",
-        "name": "boolean",
-        "value": "boolean"
-      },
-      "value": "export function isFilterInputActive(activeFilters: ProductFilter[], input: string): boolean {\n  let parsed: ProductFilter;\n  try {\n    parsed = JSON.parse(input) as ProductFilter;\n  } catch {\n    return false;\n  }\n  return activeFilters.some((filter) => filterEquals(filter, parsed));\n}"
-    }
-  },
-  "CreateCollectionStoreGeneratedType": {
-    "src/core/collection/collection.ts": {
-      "filePath": "src/core/collection/collection.ts",
-      "name": "CreateCollectionStoreGeneratedType",
-      "description": "Creates a store that holds the customer's filter and sort choices for one collection. Your loader fetches the products.\n\nThe store reads its starting filters and sort from `urlSearch`, or from `dataSearch` when you omit `urlSearch`. In React, use `CollectionProvider`, which creates the store for you and keeps the store in sync with the URL.",
-      "isPublicDocs": true,
-      "params": [
-        {
-          "name": "options",
-          "description": "The collection data, the current URL search string, and the browse change callback.",
-          "value": "CreateCollectionStoreOptions",
-          "filePath": "src/core/collection/collection.ts"
-        }
-      ],
-      "returns": {
-        "filePath": "src/core/collection/collection.ts",
-        "description": "A store with methods that change the filters and sort and report the loading status.",
-        "name": "CollectionStore",
-        "value": "CollectionStore"
-      },
-      "value": "export function createCollectionStore(options: CreateCollectionStoreOptions): CollectionStore {\n  const initialState = buildInitialState(options);\n\n  const context: CollectionStoreContext = {\n    observable: createObservable<CollectionState>(initialState),\n    handle: options.data.handle,\n    onBrowseChange: options.onBrowseChange ?? null,\n  };\n\n  return {\n    getState: () => context.observable.state,\n    subscribe: (listener) => context.observable.subscribe(listener),\n    setFilters: (filters) => applyBrowseChange(context, { filters: normalizeFilters(filters) }),\n    toggleFilter: (filter) => toggleFilter(context, filter),\n    setSortKey: (sortKey, reverse) =>\n      applyBrowseChange(context, { sortKey, reverse: reverse ?? false }),\n    reset: () => resetStore(context),\n    matchesParams: (searchParams) => matchesParams(context, searchParams),\n    syncFromParams: (searchParams) => syncFromParams(context, searchParams),\n    settle: () => settleStore(context),\n    serializeToParams: () => serializeCollectionParams(context.observable.state),\n    getFilterRemovalUrl: (filter) =>\n      getFilterRemovalUrl(serializeCollectionParams(context.observable.state), filter),\n    handleFormSubmit: (event) => handleFormSubmit(context, event),\n    setOnBrowseChange: (callback) => {\n      context.onBrowseChange = callback;\n    },\n    toggleFilterInput: (input) => toggleFilterInput(context, input),\n    setSortByValue: (sortByValue) => setSortByValue(context, sortByValue),\n  };\n}",
-      "examples": [
-        {
-          "title": "Example",
-          "description": "",
-          "tabs": [
-            {
-              "code": "const store = createCollectionStore({\n  data: loaderData.collection,\n  urlSearch: window.location.search,\n  onBrowseChange: () => navigate({ search: store.serializeToParams().toString() }),\n});\n\nstore.subscribe((state) => renderFilters(state.filters));",
-              "title": "Example"
-            }
-          ]
-        }
-      ]
-    }
-  },
-  "CreateCollectionStoreOptions": {
-    "src/core/collection/collection.ts": {
-      "filePath": "src/core/collection/collection.ts",
-      "syntaxKind": "TypeAliasDeclaration",
-      "name": "CreateCollectionStoreOptions",
-      "value": "{\n  /** The collection handle and the search string that your loader fetched products for. */\n  data: CollectionData;\n  /**\n   * Current URL search string from your router, with or without a leading `?`.\n   * Defaults to the `dataSearch` string from `data`.\n   */\n  urlSearch?: string;\n  /**\n   * Runs after each filter or sort change from a store method. Navigate to the new URL in the callback.\n   * Syncing from URL params and settling the store don't run the callback.\n   */\n  onBrowseChange?: () => void;\n}",
-      "description": "Options for `createCollectionStore`.",
-      "members": [
-        {
-          "filePath": "src/core/collection/collection.ts",
-          "syntaxKind": "PropertySignature",
-          "name": "data",
-          "value": "CollectionData",
-          "description": "The collection handle and the search string that your loader fetched products for."
-        },
-        {
-          "filePath": "src/core/collection/collection.ts",
-          "syntaxKind": "PropertySignature",
-          "name": "onBrowseChange",
-          "value": "() => void",
-          "description": "Runs after each filter or sort change from a store method. Navigate to the new URL in the callback. Syncing from URL params and settling the store don't run the callback.",
-          "isOptional": true
-        },
-        {
-          "filePath": "src/core/collection/collection.ts",
-          "syntaxKind": "PropertySignature",
-          "name": "urlSearch",
-          "value": "string",
-          "description": "Current URL search string from your router, with or without a leading `?`. Defaults to the `dataSearch` string from `data`.",
-          "isOptional": true
-        }
-      ]
-    }
-  },
-  "CollectionData": {
-    "src/core/collection/collection.ts": {
-      "filePath": "src/core/collection/collection.ts",
-      "syntaxKind": "TypeAliasDeclaration",
-      "name": "CollectionData",
-      "value": "{\n  /**\n   * Collection handle, such as `shoes`.\n   *\n   * On search pages, pass a handle such as `search:${term}` to keep separate filter and sort state for each search term. When the handle changes, the collection provider reads the filters and sort from the URL again.\n   */\n  handle: string;\n  /**\n   * Search string that your loader used for the Storefront API query, with or without a leading `?`.\n   *\n   * Pass the exact string. The status stays `loading` until this string and the URL search hold the same filters, sort key, and sort direction.\n   */\n  dataSearch: string;\n}",
-      "description": "The collection handle and the search string that your loader fetched products for.",
-      "members": [
-        {
-          "filePath": "src/core/collection/collection.ts",
-          "syntaxKind": "PropertySignature",
-          "name": "dataSearch",
-          "value": "string",
-          "description": "Search string that your loader used for the Storefront API query, with or without a leading `?`.\n\nPass the exact string. The status stays `loading` until this string and the URL search hold the same filters, sort key, and sort direction."
-        },
-        {
-          "filePath": "src/core/collection/collection.ts",
-          "syntaxKind": "PropertySignature",
-          "name": "handle",
-          "value": "string",
-          "description": "Collection handle, such as `shoes`.\n\nOn search pages, pass a handle such as `search:${term}` to keep separate filter and sort state for each search term. When the handle changes, the collection provider reads the filters and sort from the URL again."
-        }
-      ]
-    }
-  },
-  "CollectionStore": {
-    "src/core/collection/collection.ts": {
-      "filePath": "src/core/collection/collection.ts",
-      "syntaxKind": "TypeAliasDeclaration",
-      "name": "CollectionStore",
-      "value": "{\n  /** Returns the current filter and sort state. */\n  getState(): CollectionState;\n\n  /**\n   * Calls the listener on every state change. Returns a function that unsubscribes the listener.\n   * @param listener - Callback that receives the new state.\n   */\n  subscribe(listener: (state: CollectionState) => void): () => void;\n\n  /**\n   * Replaces the active filters and sets the status to `loading`.\n   */\n  setFilters(filters: ProductFilter[]): void;\n\n  /**\n   * Adds the filter when it's inactive and removes the filter when it's active, then sets the status to `loading`.\n   */\n  toggleFilter(filter: ProductFilter): void;\n\n  /**\n   * Changes the sort key and direction, then sets the status to `loading`.\n   * Omit `reverse` to sort in ascending order.\n   */\n  setSortKey(sortKey: ProductCollectionSortKeys, reverse?: boolean): void;\n\n  /**\n   * Clears all filters, restores the collection's default sort, and sets the status to `loading`.\n   */\n  reset(): void;\n\n  /**\n   * Returns `true` when the URL search params hold the same filters and sort as the store.\n   */\n  matchesParams(searchParams: URLSearchParams): boolean;\n\n  /**\n   * Updates the store from URL search params that differ from the current state.\n   * Call the method when the URL changes outside the store, such as on back or forward navigation. The method sets the status to `loading` and skips the browse change callback.\n   */\n  syncFromParams(searchParams: URLSearchParams): void;\n\n  /**\n   * Sets the status to `idle`. Call the method when your loader returns the new products.\n   */\n  settle(): void;\n\n  /**\n   * Returns the filters and sort as URL search params.\n   * The result holds only the `filter.*` and `sort_by` keys.\n   */\n  serializeToParams(): URLSearchParams;\n\n  /**\n   * Returns a query string with the store's filters and sort, minus the given filter.\n   * Use the query string in remove-filter links and buttons.\n   *\n   * The string starts with `?` and leaves out URL params that the store doesn't manage.\n   */\n  getFilterRemovalUrl(filter: ProductFilter): string;\n\n  /**\n   * Applies a submitted filter form to the store.\n   * The form's filter fields replace the active filters. The sort changes only when the form includes a `sort_by` field.\n   *\n   * Call `event.preventDefault()` first, or the browser submits the form and leaves the page. The method throws a `TypeError` when the event target isn't a form element.\n   */\n  handleFormSubmit(event: SubmitEvent): void;\n\n  /**\n   * Sets the callback that runs after each filter or sort change. Navigate to the new URL in the callback.\n   * Pass `null` to remove the callback.\n   */\n  setOnBrowseChange(callback: (() => void) | null): void;\n\n  /**\n   * Toggles the filter in a filter value's `input` JSON string from the Storefront API.\n   * The method does nothing when the string isn't valid JSON.\n   */\n  toggleFilterInput(input: string): void;\n\n  /**\n   * Applies the sort key and direction from a Liquid-compatible `sort_by` value, such as `price-ascending`.\n   * An unrecognized value sets the sort key to `COLLECTION_DEFAULT`.\n   */\n  setSortByValue(sortByValue: string): void;\n}",
-      "description": "Holds the customer's filter and sort choices for a collection or search page, and reports when new results are loading.\n\nEach change updates the state right away and sets the status to `loading`. Your app then navigates, your loader fetches the new products, and you call `settle()` when the data arrives. The collection provider navigates and settles the store for you.\n\nThe store keeps the sort direction only for the price, title, created, and ID sort keys. For other sort keys, `reverse` reads `false`. The store keeps at most one availability filter. Adding a second availability filter removes both availability filters.",
-      "members": [
-        {
-          "filePath": "src/core/collection/collection.ts",
-          "syntaxKind": "MethodSignature",
-          "name": "getFilterRemovalUrl",
-          "value": "(filter: ProductFilter) => string",
-          "description": "Returns a query string with the store's filters and sort, minus the given filter. Use the query string in remove-filter links and buttons.\n\nThe string starts with `?` and leaves out URL params that the store doesn't manage."
-        },
-        {
-          "filePath": "src/core/collection/collection.ts",
-          "syntaxKind": "MethodSignature",
-          "name": "getState",
-          "value": "() => CollectionState",
-          "description": "Returns the current filter and sort state."
-        },
-        {
-          "filePath": "src/core/collection/collection.ts",
-          "syntaxKind": "MethodSignature",
-          "name": "handleFormSubmit",
-          "value": "(event: SubmitEvent) => void",
-          "description": "Applies a submitted filter form to the store. The form's filter fields replace the active filters. The sort changes only when the form includes a `sort_by` field.\n\nCall `event.preventDefault()` first, or the browser submits the form and leaves the page. The method throws a `TypeError` when the event target isn't a form element."
-        },
-        {
-          "filePath": "src/core/collection/collection.ts",
-          "syntaxKind": "MethodSignature",
-          "name": "matchesParams",
-          "value": "(searchParams: URLSearchParams) => boolean",
-          "description": "Returns `true` when the URL search params hold the same filters and sort as the store."
-        },
-        {
-          "filePath": "src/core/collection/collection.ts",
-          "syntaxKind": "MethodSignature",
-          "name": "reset",
-          "value": "() => void",
-          "description": "Clears all filters, restores the collection's default sort, and sets the status to `loading`."
-        },
-        {
-          "filePath": "src/core/collection/collection.ts",
-          "syntaxKind": "MethodSignature",
-          "name": "serializeToParams",
-          "value": "() => URLSearchParams",
-          "description": "Returns the filters and sort as URL search params. The result holds only the `filter.*` and `sort_by` keys."
-        },
-        {
-          "filePath": "src/core/collection/collection.ts",
-          "syntaxKind": "MethodSignature",
-          "name": "setFilters",
-          "value": "(filters: ProductFilter[]) => void",
-          "description": "Replaces the active filters and sets the status to `loading`."
-        },
-        {
-          "filePath": "src/core/collection/collection.ts",
-          "syntaxKind": "MethodSignature",
-          "name": "setOnBrowseChange",
-          "value": "(callback: () => void) => void",
-          "description": "Sets the callback that runs after each filter or sort change. Navigate to the new URL in the callback. Pass `null` to remove the callback."
-        },
-        {
-          "filePath": "src/core/collection/collection.ts",
-          "syntaxKind": "MethodSignature",
-          "name": "setSortByValue",
-          "value": "(sortByValue: string) => void",
-          "description": "Applies the sort key and direction from a Liquid-compatible `sort_by` value, such as `price-ascending`. An unrecognized value sets the sort key to `COLLECTION_DEFAULT`."
-        },
-        {
-          "filePath": "src/core/collection/collection.ts",
-          "syntaxKind": "MethodSignature",
-          "name": "setSortKey",
-          "value": "(sortKey: ProductCollectionSortKeys, reverse?: boolean) => void",
-          "description": "Changes the sort key and direction, then sets the status to `loading`. Omit `reverse` to sort in ascending order."
-        },
-        {
-          "filePath": "src/core/collection/collection.ts",
-          "syntaxKind": "MethodSignature",
-          "name": "settle",
-          "value": "() => void",
-          "description": "Sets the status to `idle`. Call the method when your loader returns the new products."
-        },
-        {
-          "filePath": "src/core/collection/collection.ts",
-          "syntaxKind": "MethodSignature",
-          "name": "subscribe",
-          "value": "(listener: (state: CollectionState) => void) => () => void",
-          "description": "Calls the listener on every state change. Returns a function that unsubscribes the listener."
-        },
-        {
-          "filePath": "src/core/collection/collection.ts",
-          "syntaxKind": "MethodSignature",
-          "name": "syncFromParams",
-          "value": "(searchParams: URLSearchParams) => void",
-          "description": "Updates the store from URL search params that differ from the current state. Call the method when the URL changes outside the store, such as on back or forward navigation. The method sets the status to `loading` and skips the browse change callback."
-        },
-        {
-          "filePath": "src/core/collection/collection.ts",
-          "syntaxKind": "MethodSignature",
-          "name": "toggleFilter",
-          "value": "(filter: ProductFilter) => void",
-          "description": "Adds the filter when it's inactive and removes the filter when it's active, then sets the status to `loading`."
-        },
-        {
-          "filePath": "src/core/collection/collection.ts",
-          "syntaxKind": "MethodSignature",
-          "name": "toggleFilterInput",
-          "value": "(input: string) => void",
-          "description": "Toggles the filter in a filter value's `input` JSON string from the Storefront API. The method does nothing when the string isn't valid JSON."
-        }
-      ]
-    }
-  },
   "CreateCollectionReconcilerGeneratedType": {
     "src/core/collection/reconciler.ts": {
       "filePath": "src/core/collection/reconciler.ts",
@@ -9262,7 +9545,7 @@
         "name": "CollectionReconciler",
         "value": "CollectionReconciler"
       },
-      "value": "export function createCollectionReconciler(\n  callbacks: ReconcilerCallbacks,\n  initialPrevUrlSearch = \"\",\n): CollectionReconciler {\n  let pendingFilter: string | null = null;\n  let pendingUrls = new Set<string>();\n  let prevUrlSearch = initialPrevUrlSearch;\n\n  return {\n    handleBrowseChange() {\n      const store = callbacks.getStore();\n      const merged = mergeCollectionParams(\n        new URLSearchParams(callbacks.readUrlSearch()),\n        store.getState(),\n      );\n      const searchString = merged.toString();\n      pendingFilter = searchString;\n      pendingUrls.add(searchString);\n      callbacks.emitChange(searchString ? `?${searchString}` : \"\");\n    },\n\n    reset(newPrevUrlSearch: string) {\n      pendingFilter = null;\n      pendingUrls = new Set();\n      prevUrlSearch = newPrevUrlSearch;\n    },\n\n    // State machine — four states:\n    //\n    //   ┌─────────────────────────────────────────────────────────────────────┐\n    //   │ State A: No pending navigation (pendingFilter === null)            │\n    //   │  • URL matches store → try settle if server data caught up         │\n    //   │  • URL differs from store → syncFromParams, then try settle        │\n    //   ├─────────────────────────────────────────────────────────────────────┤\n    //   │ State B: Pending — URL matches target (pendingTargetMatchesUrl)    │\n    //   │  • Server data matches URL → settle, clear pending state           │\n    //   │  • Server data stale (intermediate) → re-dispatch to target        │\n    //   │  • Server data not yet arrived → wait (keep pending set)           │\n    //   ├─────────────────────────────────────────────────────────────────────┤\n    //   │ State C: Pending — URL is intermediate (in pendingUrls)            │\n    //   │  • Ignore URL change; if router settled here with server data      │\n    //   │    confirming the intermediate, re-dispatch to the real target     │\n    //   ├─────────────────────────────────────────────────────────────────────┤\n    //   │ State D: Pending — URL is unknown (not in pendingUrls)             │\n    //   │  • External navigation (back/forward, <Link>)                     │\n    //   │  • Abandon pending state, fall through to State A                  │\n    //   └─────────────────────────────────────────────────────────────────────┘\n    //\n    // Rapid toggles (A on → B on → A off) produce multiple in-flight navigations.\n    // pendingFilter tracks the latest target; pendingUrls tracks every URL\n    // dispatched in the chain so intermediates can be distinguished from external navs.\n    reconcile(urlSearch: string, dataSearch: string) {\n      const store = callbacks.getStore();\n\n      const pendingSearchEquals = (search: string): boolean =>\n        [...pendingUrls].some((pending) => collectionSearchEqual(pending, search));\n\n      const pendingTargetMatchesUrl =\n        pendingFilter != null && collectionSearchEqual(pendingFilter, urlSearch);\n\n      const trySettleFromServer = (): boolean => {\n        if (store.getState().status !== \"loading\") return false;\n        if (!collectionSearchEqual(dataSearch, urlSearch)) return false;\n\n        const incomingParams = new URLSearchParams(urlSearch);\n        if (!store.matchesParams(incomingParams)) {\n          store.syncFromParams(incomingParams);\n        }\n\n        store.settle();\n        return true;\n      };\n\n      const clearPendingIfSettled = (): boolean => {\n        if (!trySettleFromServer()) return false;\n        pendingFilter = null;\n        pendingUrls.clear();\n        return true;\n      };\n\n      if (clearPendingIfSettled()) return;\n\n      const normalizedUrlSearch = normalizeCollectionSearch(urlSearch);\n      const normalizedPrevUrlSearch = normalizeCollectionSearch(prevUrlSearch);\n      const urlSearchChanged = normalizedUrlSearch !== normalizedPrevUrlSearch;\n      prevUrlSearch = urlSearch;\n\n      const reDispatchToPendingTarget = () => {\n        if (pendingFilter == null) return;\n        callbacks.emitChange(pendingFilter ? `?${pendingFilter}` : \"\");\n      };\n\n      const routerSettledOnIntermediateWithStaleTarget =\n        pendingFilter != null &&\n        pendingSearchEquals(urlSearch) &&\n        !pendingTargetMatchesUrl &&\n        collectionSearchEqual(dataSearch, urlSearch);\n\n      const serverConfirmedIntermediateWhileTargeting =\n        pendingFilter != null &&\n        pendingSearchEquals(dataSearch) &&\n        !collectionSearchEqual(dataSearch, pendingFilter) &&\n        !collectionSearchEqual(dataSearch, urlSearch);\n\n      if (pendingTargetMatchesUrl) {\n        if (trySettleFromServer()) {\n          pendingFilter = null;\n          pendingUrls.clear();\n        } else if (\n          store.getState().status === \"loading\" &&\n          serverConfirmedIntermediateWhileTargeting\n        ) {\n          reDispatchToPendingTarget();\n        }\n        return;\n      }\n\n      if (pendingFilter != null) {\n        if (!urlSearchChanged) {\n          if (clearPendingIfSettled()) return;\n          if (routerSettledOnIntermediateWithStaleTarget) {\n            reDispatchToPendingTarget();\n          }\n          return;\n        }\n\n        if (pendingSearchEquals(urlSearch)) {\n          if (clearPendingIfSettled()) return;\n          if (routerSettledOnIntermediateWithStaleTarget) {\n            reDispatchToPendingTarget();\n          }\n          return;\n        }\n\n        pendingFilter = null;\n        pendingUrls.clear();\n      }\n\n      const incomingParams = new URLSearchParams(urlSearch);\n\n      if (store.matchesParams(incomingParams)) {\n        trySettleFromServer();\n        return;\n      }\n\n      store.syncFromParams(incomingParams);\n      trySettleFromServer();\n    },\n  };\n}"
+      "value": "export function createCollectionReconciler(\n  callbacks: ReconcilerCallbacks,\n  initialPrevUrlSearch = \"\",\n): CollectionReconciler {\n  let pendingFilter: string | null = null;\n  let pendingUrls = new Set<string>();\n  let prevUrlSearch = initialPrevUrlSearch;\n  // The `dataSearch` of the last `reconcile()` call.\n  let lastDataSearch: string | null = null;\n\n  return {\n    handleBrowseChange() {\n      const store = callbacks.getStore();\n      const urlSearch = callbacks.readUrlSearch();\n      const merged = mergeCollectionParams(new URLSearchParams(urlSearch), store.getState());\n      const searchString = merged.toString();\n      // A change back to the current URL, such as a filter turned on and off before the URL\n      // changed, gives no new URL or data, so no `reconcile()` call settles the store. The loaded\n      // data already matches, so settle now. The navigation still runs, to cancel the pending one.\n      if (\n        lastDataSearch !== null &&\n        collectionSearchEqual(searchString, urlSearch) &&\n        collectionSearchEqual(lastDataSearch, urlSearch)\n      ) {\n        pendingFilter = null;\n        pendingUrls.clear();\n        store.settle();\n      } else {\n        pendingFilter = searchString;\n        pendingUrls.add(searchString);\n      }\n      callbacks.emitChange(searchString ? `?${searchString}` : \"\");\n    },\n\n    reset(newPrevUrlSearch: string) {\n      pendingFilter = null;\n      pendingUrls = new Set();\n      prevUrlSearch = newPrevUrlSearch;\n    },\n\n    // State machine — four states:\n    //\n    //   ┌─────────────────────────────────────────────────────────────────────┐\n    //   │ State A: No pending navigation (pendingFilter === null)            │\n    //   │  • URL matches store → try settle if server data caught up         │\n    //   │  • URL differs from store → syncFromParams, then try settle        │\n    //   ├─────────────────────────────────────────────────────────────────────┤\n    //   │ State B: Pending — URL matches target (pendingTargetMatchesUrl)    │\n    //   │  • Server data matches URL → settle, clear pending state           │\n    //   │  • Server data stale (intermediate) → re-dispatch to target        │\n    //   │  • Server data not yet arrived → wait (keep pending set)           │\n    //   ├─────────────────────────────────────────────────────────────────────┤\n    //   │ State C: Pending — URL is intermediate (in pendingUrls)            │\n    //   │  • Ignore URL change; if router settled here with server data      │\n    //   │    confirming the intermediate, re-dispatch to the real target     │\n    //   ├─────────────────────────────────────────────────────────────────────┤\n    //   │ State D: Pending — URL is unknown (not in pendingUrls)             │\n    //   │  • External navigation (back/forward, <Link>)                     │\n    //   │  • Abandon pending state, fall through to State A                  │\n    //   └─────────────────────────────────────────────────────────────────────┘\n    //\n    // Rapid toggles (A on → B on → A off) produce multiple in-flight navigations.\n    // pendingFilter tracks the latest target; pendingUrls tracks every URL\n    // dispatched in the chain so intermediates can be distinguished from external navs.\n    reconcile(urlSearch: string, dataSearch: string) {\n      lastDataSearch = dataSearch;\n      const store = callbacks.getStore();\n\n      const pendingSearchEquals = (search: string): boolean =>\n        [...pendingUrls].some((pending) => collectionSearchEqual(pending, search));\n\n      const pendingTargetMatchesUrl =\n        pendingFilter != null && collectionSearchEqual(pendingFilter, urlSearch);\n\n      const trySettleFromServer = (): boolean => {\n        if (store.getState().status !== \"loading\") return false;\n        if (!collectionSearchEqual(dataSearch, urlSearch)) return false;\n\n        const incomingParams = new URLSearchParams(urlSearch);\n        if (!store.matchesParams(incomingParams)) {\n          store.syncFromParams(incomingParams);\n        }\n\n        store.settle();\n        return true;\n      };\n\n      const clearPendingIfSettled = (): boolean => {\n        if (!trySettleFromServer()) return false;\n        pendingFilter = null;\n        pendingUrls.clear();\n        return true;\n      };\n\n      if (clearPendingIfSettled()) return;\n\n      const normalizedUrlSearch = normalizeCollectionSearch(urlSearch);\n      const normalizedPrevUrlSearch = normalizeCollectionSearch(prevUrlSearch);\n      const urlSearchChanged = normalizedUrlSearch !== normalizedPrevUrlSearch;\n      prevUrlSearch = urlSearch;\n\n      const reDispatchToPendingTarget = () => {\n        if (pendingFilter == null) return;\n        callbacks.emitChange(pendingFilter ? `?${pendingFilter}` : \"\");\n      };\n\n      const routerSettledOnIntermediateWithStaleTarget =\n        pendingFilter != null &&\n        pendingSearchEquals(urlSearch) &&\n        !pendingTargetMatchesUrl &&\n        collectionSearchEqual(dataSearch, urlSearch);\n\n      const serverConfirmedIntermediateWhileTargeting =\n        pendingFilter != null &&\n        pendingSearchEquals(dataSearch) &&\n        !collectionSearchEqual(dataSearch, pendingFilter) &&\n        !collectionSearchEqual(dataSearch, urlSearch);\n\n      if (pendingTargetMatchesUrl) {\n        if (trySettleFromServer()) {\n          pendingFilter = null;\n          pendingUrls.clear();\n        } else if (\n          store.getState().status === \"loading\" &&\n          serverConfirmedIntermediateWhileTargeting\n        ) {\n          reDispatchToPendingTarget();\n        }\n        return;\n      }\n\n      if (pendingFilter != null) {\n        if (!urlSearchChanged) {\n          if (clearPendingIfSettled()) return;\n          if (routerSettledOnIntermediateWithStaleTarget) {\n            reDispatchToPendingTarget();\n          }\n          return;\n        }\n\n        if (pendingSearchEquals(urlSearch)) {\n          if (clearPendingIfSettled()) return;\n          if (routerSettledOnIntermediateWithStaleTarget) {\n            reDispatchToPendingTarget();\n          }\n          return;\n        }\n\n        pendingFilter = null;\n        pendingUrls.clear();\n      }\n\n      const incomingParams = new URLSearchParams(urlSearch);\n\n      if (store.matchesParams(incomingParams)) {\n        trySettleFromServer();\n        return;\n      }\n\n      store.syncFromParams(incomingParams);\n      trySettleFromServer();\n    },\n  };\n}"
     }
   },
   "ReconcilerCallbacks": {
@@ -9302,7 +9585,7 @@
       "filePath": "src/core/collection/reconciler.ts",
       "syntaxKind": "TypeAliasDeclaration",
       "name": "CollectionReconciler",
-      "value": "{\n  /**\n   * Brings the store in line with the URL. Call the method each time the URL search or the `dataSearch` string changes.\n   *\n   * The method settles the store when your loader data matches the URL. During rapid filter changes, the method skips intermediate URLs. A URL that the reconciler didn't request counts as external navigation, such as back or forward.\n   */\n  reconcile(urlSearch: string, dataSearch: string): void;\n  /**\n   * Builds the next search string from the store's filters and sort, and passes the string to `emitChange`. Register the method as the store's browse change callback.\n   *\n   * The new search string keeps every URL param that the store doesn't manage and drops the `before` and `after` pagination cursors.\n   */\n  handleBrowseChange(): void;\n  /**\n   * Clears pending navigation. Call the method when you replace the store.\n   * @param newPrevUrlSearch - Current URL search string, which the next `reconcile()` call compares against.\n   */\n  reset(newPrevUrlSearch: string): void;\n}",
+      "value": "{\n  /**\n   * Brings the store in line with the URL. Call the method each time the URL search or the `dataSearch` string changes.\n   *\n   * The method settles the store when your loader data matches the URL. During rapid filter changes, the method skips intermediate URLs. A URL that the reconciler didn't request counts as external navigation, such as back or forward.\n   */\n  reconcile(urlSearch: string, dataSearch: string): void;\n  /**\n   * Builds the next search string from the store's filters and sort, and passes the string to `emitChange`. Register the method as the store's browse change callback.\n   *\n   * The new search string keeps every URL param that the store doesn't manage and drops the `before` and `after` pagination cursors.\n   * When the new filters and sort match the current URL and the last `dataSearch`, such as after a filter is turned on and off before the URL changes, the method also settles the store.\n   */\n  handleBrowseChange(): void;\n  /**\n   * Clears pending navigation. Call the method when you replace the store.\n   * @param newPrevUrlSearch - Current URL search string, which the next `reconcile()` call compares against.\n   */\n  reset(newPrevUrlSearch: string): void;\n}",
       "description": "Keeps the URL, your loader data, and a collection store in sync while the customer changes filters and sort.",
       "members": [
         {
@@ -9310,7 +9593,7 @@
           "syntaxKind": "MethodSignature",
           "name": "handleBrowseChange",
           "value": "() => void",
-          "description": "Builds the next search string from the store's filters and sort, and passes the string to `emitChange`. Register the method as the store's browse change callback.\n\nThe new search string keeps every URL param that the store doesn't manage and drops the `before` and `after` pagination cursors."
+          "description": "Builds the next search string from the store's filters and sort, and passes the string to `emitChange`. Register the method as the store's browse change callback.\n\nThe new search string keeps every URL param that the store doesn't manage and drops the `before` and `after` pagination cursors. When the new filters and sort match the current URL and the last `dataSearch`, such as after a filter is turned on and off before the URL changes, the method also settles the store."
         },
         {
           "filePath": "src/core/collection/reconciler.ts",
@@ -12473,6 +12756,16 @@
           ]
         }
       ]
+    }
+  },
+  "CollectionUpdatesProps": {
+    "src/react/collection-updates.tsx": {
+      "filePath": "src/react/collection-updates.tsx",
+      "syntaxKind": "TypeAliasDeclaration",
+      "name": "CollectionUpdatesProps",
+      "value": "Omit<CollectionUpdatesOptions, \"status\"> & HTMLAttributes<HTMLElement>",
+      "description": "Props for the `CollectionUpdates` component: the collection, the number of products that the page shows, and HTML attributes such as `className` for the element.",
+      "isPublicDocs": true
     }
   },
   "CollectionViewProps": {
