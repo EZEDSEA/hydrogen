@@ -21,8 +21,12 @@ const route = useRoute();
 const urlSearchOverride = ref<string | null>(null);
 const urlSearch = computed(() => urlSearchOverride.value ?? collectionRouteSearch(route));
 
+// Take the term from the URL, not from the data: Vue Router updates the URL before the new
+// results load. A new handle replaces the store, which aborts pending search update events.
+// With the old handle, the store would settle with the results of the old term.
+const routeTerm = computed(() => (route.query.q as string)?.trim() ?? "");
 const collectionData = computed(() => ({
-  handle: `search:${props.term}`,
+  handle: `search:${routeTerm.value}`,
   dataSearch: props.dataSearch,
 }));
 
