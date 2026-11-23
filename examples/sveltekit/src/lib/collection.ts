@@ -3,6 +3,7 @@ import {
   type CollectionData,
   type CollectionState,
   type CollectionStore,
+  type CollectionUpdatesElement,
 } from "@shopify/hydrogen";
 import { readable, type Readable } from "svelte/store";
 
@@ -69,6 +70,23 @@ export function collectionState(controller: CollectionStoreController): Readable
       unsubscribeController();
     };
   });
+}
+
+/**
+ * Sets the current collection store on a collection updates element, and sets the new store when
+ * the controller replaces it. The returned cleanup sets `null`.
+ */
+export function connectCollectionUpdates(
+  element: CollectionUpdatesElement,
+  controller: CollectionStoreController,
+): () => void {
+  const unsubscribe = controller.subscribe((store) => {
+    element.store = store;
+  });
+  return () => {
+    unsubscribe();
+    element.store = null;
+  };
 }
 
 export function createCollectionForm(controller: CollectionStoreController) {
