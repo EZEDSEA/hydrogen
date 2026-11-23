@@ -45,3 +45,10 @@ export {
   getCollectionUpdatesAttributes,
 } from "./collection-updates";
 export type { CollectionUpdatesElement, CollectionUpdatesOptions } from "./collection-updates";
+
+export {
+  defineSearchUpdates,
+  getSearchUpdatesAttributes,
+  SEARCH_UPDATES_TAG_NAME,
+} from "./search-updates";
+export type { SearchUpdatesElement, SearchUpdatesOptions } from "./search-updates";

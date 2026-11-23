@@ -18,4 +18,5 @@ function createFakeUpdateEvent(type: string) {
  */
 export const fakeStandardEvents = {
   CollectionUpdateEvent: createFakeUpdateEvent("shopify:collection:update"),
+  SearchUpdateEvent: createFakeUpdateEvent("shopify:search:update"),
 };

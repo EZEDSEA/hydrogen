@@ -224,6 +224,12 @@ export {
   getCollectionUpdatesAttributes,
 } from "./collection";
 export type { CollectionUpdatesElement, CollectionUpdatesOptions } from "./collection";
+export {
+  defineSearchUpdates,
+  getSearchUpdatesAttributes,
+  SEARCH_UPDATES_TAG_NAME,
+} from "./collection";
+export type { SearchUpdatesElement, SearchUpdatesOptions } from "./collection";
 
 export {
   canAddToCart,

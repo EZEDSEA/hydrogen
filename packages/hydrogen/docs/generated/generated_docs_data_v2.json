@@ -6940,6 +6940,120 @@
       "value": "export function defineCollectionUpdates(): void {\n  defineUpdateEventElement(COLLECTION_UPDATES_TAG_NAME, collectionUpdates);\n}"
     }
   },
+  "GetSearchUpdatesAttributesGeneratedType": {
+    "src/core/collection/search-updates.ts": {
+      "filePath": "src/core/collection/search-updates.ts",
+      "name": "GetSearchUpdatesAttributesGeneratedType",
+      "description": "Returns the attributes of the search updates element. Render them on a `SEARCH_UPDATES_TAG_NAME` element on a framework without a Hydrogen binding, and render them again when the total count or the store status changes. Set the value as an HTML attribute, such as with `attr:` on Solid.",
+      "isPublicDocs": true,
+      "params": [
+        {
+          "name": "input1",
+          "description": "The search term, the total number of results, and the store status.",
+          "value": "SearchUpdatesOptions",
+          "filePath": "src/core/collection/search-updates.ts"
+        }
+      ],
+      "returns": {
+        "filePath": "src/core/collection/search-updates.ts",
+        "description": "The `search-update-payload` attribute.",
+        "name": "Record<typeof PAYLOAD, string>",
+        "value": "Record<typeof PAYLOAD, string>"
+      },
+      "value": "export function getSearchUpdatesAttributes({\n  query,\n  totalCount,\n  status,\n}: SearchUpdatesOptions): Record<typeof PAYLOAD, string> {\n  const payload: SearchUpdatesOptions = { query, totalCount, status };\n  return { [PAYLOAD]: JSON.stringify(payload) };\n}"
+    }
+  },
+  "SearchUpdatesOptions": {
+    "src/core/collection/search-updates.ts": {
+      "filePath": "src/core/collection/search-updates.ts",
+      "name": "SearchUpdatesOptions",
+      "description": "The search term, the total number of results, and the store status.",
+      "members": [
+        {
+          "filePath": "src/core/collection/search-updates.ts",
+          "syntaxKind": "PropertySignature",
+          "name": "query",
+          "value": "string",
+          "description": "Search term of the results. The search update events send it as `search.query`."
+        },
+        {
+          "filePath": "src/core/collection/search-updates.ts",
+          "syntaxKind": "PropertySignature",
+          "name": "status",
+          "value": "'loading' | 'idle'",
+          "description": "The current `status` of the collection store of the search page. Render the attributes again when it changes. The element resolves update promises with the first `totalCount` that you render with `idle`."
+        },
+        {
+          "filePath": "src/core/collection/search-updates.ts",
+          "syntaxKind": "PropertySignature",
+          "name": "totalCount",
+          "value": "number",
+          "description": "Total number of results, from the `totalCount` field of the Storefront API `search` query."
+        }
+      ],
+      "value": "export interface SearchUpdatesOptions {\n  /** Search term of the results. The search update events send it as `search.query`. */\n  query: string;\n  /** Total number of results, from the `totalCount` field of the Storefront API `search` query. */\n  totalCount: number;\n  /**\n   * The current `status` of the collection store of the search page. Render the attributes again\n   * when it changes. The element resolves update promises with the first `totalCount` that you\n   * render with `idle`.\n   */\n  status: CollectionState[\"status\"];\n}"
+    }
+  },
+  "SearchUpdatesElement": {
+    "src/core/collection/search-updates.ts": {
+      "filePath": "src/core/collection/search-updates.ts",
+      "syntaxKind": "TypeAliasDeclaration",
+      "name": "SearchUpdatesElement",
+      "value": "HTMLElement & { store: CollectionStore | null }",
+      "description": "The search updates element, `SEARCH_UPDATES_TAG_NAME`.\n\nSet `store` to the collection store of the search page. The element then sends `shopify:search:update` for each filter or sort change that the customer makes. Its promise resolves with the total count that the page renders after the store settles. Set `store` to `null` to stop. The element reads a value that you set before it is registered.",
+      "isPublicDocs": true
+    }
+  },
+  "SearchUpdatesGeneratedType": {
+    "src/core/collection/search-updates.ts": {
+      "filePath": "src/core/collection/search-updates.ts",
+      "name": "SearchUpdatesGeneratedType",
+      "description": "Describes an update element, such as `shopify-collection-updates`.",
+      "value": "searchUpdates: UpdateEventOptions<\n  SearchUpdatesOptions,\n  SearchUpdatePayload,\n  StandardEvents.SearchUpdateResult\n> = {\n  payloadAttribute: PAYLOAD,\n  getEventClass: (module) => module.SearchUpdateEvent,\n  getKey: ({ query }) => query,\n  getResult: ({ totalCount }) => ({ totalCount }),\n  createEventPayload: ({ query }, { filters, sortKey }) => {\n    const search: SearchUpdatePayload[\"search\"] = { query };\n    if (filters.length > 0) search.productFilters = filters;\n    // Search sorts only by relevance or price. Standard Events' `getSortKey` maps sort values the same way.\n    if (sortKey !== undefined) search.sortKey = sortKey === \"PRICE\" ? \"PRICE\" : \"RELEVANCE\";\n    return { search };\n  },\n  abortMessage:\n    \"The search or its store changed, or the updates element disconnected, before the update finished.\",\n}"
+    }
+  },
+  "SearchUpdatePayload": {
+    "src/core/collection/search-updates.ts": {
+      "filePath": "src/core/collection/search-updates.ts",
+      "syntaxKind": "TypeAliasDeclaration",
+      "name": "SearchUpdatePayload",
+      "value": "Omit<StandardEvents.SearchUpdatePayload, \"promise\">",
+      "description": "",
+      "members": [
+        {
+          "filePath": "src/core/collection/search-updates.ts",
+          "syntaxKind": "PropertySignature",
+          "name": "detail",
+          "value": "SearchUpdatePayloadDetail",
+          "description": "Optional custom data. Use this to provide additional data for internal use in the theme.",
+          "isOptional": true
+        },
+        {
+          "filePath": "src/core/collection/search-updates.ts",
+          "syntaxKind": "PropertySignature",
+          "name": "search",
+          "value": "{ query: string; productFilters?: { available?: boolean; category?: { id: string; }; price?: { min?: number; max?: number; }; productMetafield?: { namespace: string; key: string; value?: string; }; productType?: string; productVendor?: string; tag?: string; taxonomyMetafield?: { key: string; value: string; }; variantMetafield?: { namespace: string; key: string; value?: string; }; variantOption?: { name: string; value?: string; }; }[]; sortKey?: \"PRICE\" | \"RELEVANCE\"; }",
+          "description": ""
+        }
+      ]
+    }
+  },
+  "DefineSearchUpdatesGeneratedType": {
+    "src/core/collection/search-updates.ts": {
+      "filePath": "src/core/collection/search-updates.ts",
+      "name": "DefineSearchUpdatesGeneratedType",
+      "description": "Registers the search updates custom element in the browser right away. The element loads Shopify's Standard Events module only to create events. The function does nothing on the server or when the element is already registered. `initializeShopifyScripts` and the `ShopifyScripts` component call it for you.",
+      "isPublicDocs": true,
+      "params": [],
+      "returns": {
+        "filePath": "src/core/collection/search-updates.ts",
+        "description": "",
+        "name": "void",
+        "value": "void"
+      },
+      "value": "export function defineSearchUpdates(): void {\n  defineUpdateEventElement(SEARCH_UPDATES_TAG_NAME, searchUpdates);\n}"
+    }
+  },
   "GetProductViewAttributesGeneratedType": {
     "src/core/product/product-view.ts": {
       "filePath": "src/core/product/product-view.ts",
@@ -7107,7 +7221,7 @@
     "src/core/shopify-scripts/initialize.ts": {
       "filePath": "src/core/shopify-scripts/initialize.ts",
       "name": "InitializeShopifyScriptsGeneratedType",
-      "description": "Starts Shopify's scripts in the browser for frameworks without a Hydrogen binding. Call it after hydration, with the consent configuration that you passed to `getShopifyScriptTags`.\n\nThe function sets up `window.Shopify.routes`, registers the product view, collection view, and collection updates elements, and sends a page view event on load and after each navigation that changes the path or query. In the custom banner consent mode, Hydrogen calls your setup callback after the Customer Privacy API loads. A custom banner configuration without a setup callback logs a warning, and analytics events stay blocked. When the browser supports WebMCP, the function also loads Shopify's WebMCP tools. Set `webMcp` to `false` to skip them.",
+      "description": "Starts Shopify's scripts in the browser for frameworks without a Hydrogen binding. Call it after hydration, with the consent configuration that you passed to `getShopifyScriptTags`.\n\nThe function sets up `window.Shopify.routes`, registers the product view, collection view, collection updates, and search updates elements, and sends a page view event on load and after each navigation that changes the path or query. In the custom banner consent mode, Hydrogen calls your setup callback after the Customer Privacy API loads. A custom banner configuration without a setup callback logs a warning, and analytics events stay blocked. When the browser supports WebMCP, the function also loads Shopify's WebMCP tools. Set `webMcp` to `false` to skip them.",
       "isPublicDocs": true,
       "params": [
         {
@@ -7123,7 +7237,7 @@
         "name": "Promise<boolean | void>",
         "value": "Promise<boolean | void>"
       },
-      "value": "export function initializeShopifyScripts({\n  consent,\n  navigate,\n  nonce,\n  routes,\n  webMcp = true,\n}: InitializeShopifyScriptsOptions): Promise<boolean | void> {\n  configureShopifyRouting({ navigate, routes });\n  initializeShopifyPageViewEvents();\n  defineProductView();\n  defineCollectionView();\n  defineCollectionUpdates();\n  if (__DEV__) observeNavigation(warnOnLocaleChangingNavigation);\n\n  if (consent?.mode === \"custom-banner\") {\n    if (typeof consent.setup !== \"function\") {\n      log.warn(\n        \"custom-banner requires a consent.setup callback; analytics delivery remains blocked until setup completes\",\n      );\n    } else {\n      try {\n        initializeCustomConsent(consent.setup);\n      } catch (error) {\n        log.error(\"custom consent initialization failed\", { error });\n      }\n    }\n  }\n\n  if (!webMcp) return Promise.resolve();\n\n  return loadShopifyWebMcpTools(nonce);\n}"
+      "value": "export function initializeShopifyScripts({\n  consent,\n  navigate,\n  nonce,\n  routes,\n  webMcp = true,\n}: InitializeShopifyScriptsOptions): Promise<boolean | void> {\n  configureShopifyRouting({ navigate, routes });\n  initializeShopifyPageViewEvents();\n  defineProductView();\n  defineCollectionView();\n  defineCollectionUpdates();\n  defineSearchUpdates();\n  if (__DEV__) observeNavigation(warnOnLocaleChangingNavigation);\n\n  if (consent?.mode === \"custom-banner\") {\n    if (typeof consent.setup !== \"function\") {\n      log.warn(\n        \"custom-banner requires a consent.setup callback; analytics delivery remains blocked until setup completes\",\n      );\n    } else {\n      try {\n        initializeCustomConsent(consent.setup);\n      } catch (error) {\n        log.error(\"custom consent initialization failed\", { error });\n      }\n    }\n  }\n\n  if (!webMcp) return Promise.resolve();\n\n  return loadShopifyWebMcpTools(nonce);\n}"
     }
   },
   "GetShopifyScriptTagsGeneratedType": {
@@ -13736,6 +13850,16 @@
         "value": "UseProductFormResult<ProductInput>"
       },
       "value": "(\n    store: ProductFormStore,\n    options?: UseProductFormOptions<ProductInput>,\n  ) => UseProductFormResult<ProductInput>"
+    }
+  },
+  "SearchUpdatesProps": {
+    "src/react/search-updates.tsx": {
+      "filePath": "src/react/search-updates.tsx",
+      "syntaxKind": "TypeAliasDeclaration",
+      "name": "SearchUpdatesProps",
+      "value": "Omit<SearchUpdatesOptions, \"status\"> & HTMLAttributes<HTMLElement>",
+      "description": "Props for the `SearchUpdates` component: the search term, the total number of results, and HTML attributes such as `className` for the element.",
+      "isPublicDocs": true
     }
   },
   "ShopPayButtonProps": {
